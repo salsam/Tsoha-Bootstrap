@@ -3,7 +3,7 @@
 Yleisiä linkkejä:
 
 * [Linkki sovellukseeni](http://samisalo.users.cs.helsinki.fi/ChessDatabase)
-* [Linkki dokumentaatiooni](https://github.com/salsam/Tsoha-Bootstrap/blob/master/doc/dokumentaatio.pdf)
+* [Linkki dokumentaatiooni](https://github.com/salsam/Tsoha-Bootstrap/blob/master/doc/ChessDatabaseDocs.pdf)
 
 ## Työn aihe
 
