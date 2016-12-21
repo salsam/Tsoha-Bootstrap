@@ -16,12 +16,20 @@ class HelloWorldController extends BaseController {
         View::make('suunnitelmat/login.html');
     }
 
+    public static function game_details() {
+        View::make('suunnitelmat/game_details.html');
+    }
+
     public static function game_history() {
         View::make('suunnitelmat/game_history.html');
     }
 
     public static function register() {
         View::make('suunnitelmat/register.html');
+    }
+
+    public static function tournament_details() {
+        View::make('suunnitelmat/tournament_details.html');
     }
 
     public static function tournament_list() {

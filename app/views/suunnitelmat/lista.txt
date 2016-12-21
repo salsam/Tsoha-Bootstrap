@@ -1,4 +1,8 @@
+Tarvittavat sivut:
+
+etusivu
 kirjautumissivu
+rekisteröinti
 pelilistaus
 turnauslistaus
 pelin lisäys
