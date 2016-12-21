@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Editing game 123456789</h1>
+
+<form>
+    <div class="form-group">
+        <label>Date</label>
+        <input class="form-control" value="24.12.2016" type="text">
+    </div>
+    <div class="form-group">
+        <label>Opponent</label>
+        <input class="form-control" value="Santa Claus" type="text">
+    </div>
+
+
+    <div class="radio">
+        <label class="label label-success">
+            <input type="radio">
+            Victory
+        </label>
+    </div>
+    <div class="radio">
+        <label class="label label-default">
+            <input type="radio">
+            Draw
+        </label>
+    </div>
+    <div class="radio">
+        <label class="label label-danger">
+            <input type="radio">
+            Loss
+        </label>
+    </div>
+
+
+    <div class="form-group">
+        <label>Moves</label>
+        <input class="form-control" value="1. f3 e5 2.g4 Qh4#" type="text">
+    </div>
+    <div class="form-group">
+        <label>Notes</label>
+        <input class="form-control" value="I got fooled" type="text">
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+    </div>
+</form>
+{% endblock %}

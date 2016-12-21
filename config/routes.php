@@ -16,6 +16,10 @@ $routes->get('/game_details', function() {
     HelloWorldController::game_details();
 });
 
+$routes->get('/game_edit', function() {
+    HelloWorldController::game_edit();
+});
+
 $routes->get('/game_history', function() {
     HelloWorldController::game_history();
 });

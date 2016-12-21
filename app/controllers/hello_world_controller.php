@@ -20,6 +20,10 @@ class HelloWorldController extends BaseController {
         View::make('suunnitelmat/game_details.html');
     }
 
+    public static function game_edit() {
+        View::make('suunnitelmat/game_edit.html');
+    }
+
     public static function game_history() {
         View::make('suunnitelmat/game_history.html');
     }
