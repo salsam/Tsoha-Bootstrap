@@ -1,0 +1,9 @@
+kirjautumissivu
+pelilistaus
+turnauslistaus
+pelin lisäys
+pelin muokkaus
+pelin esittely
+turnauksen lisäys
+turnauksen muokkaus
+turnauksen esittely
