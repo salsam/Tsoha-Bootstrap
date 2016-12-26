@@ -1,4 +1,4 @@
-CREATE TYPE gresult AS ENUM ('victory', 'draw', 'loss')
+CREATE TYPE gresult AS ENUM ('victory', 'draw', 'loss');
 
 CREATE TABLE Player(
   playerID SERIAL PRIMARY KEY,
