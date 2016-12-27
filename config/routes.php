@@ -24,6 +24,18 @@ $routes->get('/game_history', function() {
     HelloWorldController::game_history();
 });
 
+$routes->get('/organizer_edit', function() {
+    HelloWorldController::organizer_edit();
+});
+
+$routes->get('/organizer_register', function() {
+    HelloWorldController::organizer_register();
+});
+
+$routes->get('/player_edit', function() {
+    HelloWorldController::player_edit();
+});
+
 $routes->get('/register', function() {
     HelloWorldController::register();
 });
