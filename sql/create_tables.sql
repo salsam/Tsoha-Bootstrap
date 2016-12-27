@@ -30,7 +30,6 @@ CREATE TABLE Tournament(
 CREATE TABLE Participation(
   player INTEGER REFERENCES Player(playerID),
   tournament INTEGER REFERENCES Tournament(tournamentID),
-  PRIMARY KEY (player, tournament),
   entry_date DATE NOT NULL
 );
 
