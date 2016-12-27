@@ -2,22 +2,22 @@ CREATE TYPE gresult AS ENUM ('victory', 'draw', 'loss');
 
 CREATE TABLE Player(
   playerID SERIAL PRIMARY KEY,
-  pname varchar(50) NOT NULL,
+  pname varchar(50) UNIQUE NOT NULL,
   password varchar(50) NOT NULL,
-  email varchar(50) NOT NULL
+  email varchar(50) UNIQUE NOT NULL
 );
 
 CREATE TABLE Organizer(
   organizerID SERIAL PRIMARY KEY,
-  oname varchar(50) NOT NULL,
+  oname varchar(50) UNIQUE NOT NULL,
   password varchar(50) NOT NULL,
-  email varchar(50) NOT NULL
+  email varchar(50) UNIQUE NOT NULL
 );
 
 CREATE TABLE Tournament(
   tournamentID SERIAL PRIMARY KEY,
   organizer INTEGER REFERENCES Organizer(organizerID),
-  tname varchar(50) NOT NULL,
+  tname varchar(50) UNIQUE NOT NULL,
   start_date DATE NOT NULL,
   end_date DATE NOT NULL,
   game_format varchar(50) NOT NULL,
