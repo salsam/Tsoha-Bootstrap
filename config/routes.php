@@ -8,8 +8,8 @@ $routes->get('/hiekkalaatikko', function() {
     HelloWorldController::sandbox();
 });
 
-$routes->get('/login', function() {
-    HelloWorldController::login();
+$routes->get('/game_add', function() {
+    HelloWorldController::game_add();
 });
 
 $routes->get('/game_details', function() {
@@ -22,6 +22,10 @@ $routes->get('/game_edit', function() {
 
 $routes->get('/game_history', function() {
     HelloWorldController::game_history();
+});
+
+$routes->get('/login', function() {
+    HelloWorldController::login();
 });
 
 $routes->get('/organizer_edit', function() {
@@ -46,4 +50,14 @@ $routes->get('/tournament_details', function() {
 
 $routes->get('/tournament_list', function() {
     HelloWorldController::tournament_list();
+});
+
+
+#Tästä alkavat dynaamiset sivut
+$routes->get('/game', function() {
+    GameController::history();
+});
+
+$routes->get('/game/:id', function($id) {
+    GameController::details($id);
 });

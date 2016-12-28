@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Game history</h1>
+
+<a class="btn btn-default" href="{{base_path}}/game/new">Add a new game</a>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Opponent</th>
+            <th>Result</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for game in games %}
+        <tr>
+            <td>{{game.played}}</td>
+            <td>{{game.opponent}}</td>
+            <td>
+                {% if game.game_result=='draw' %}
+                <label class="label label-default">Draw</label>
+                {% elseif game.game_result=='loss' %}
+                <label class="label label-danger">Loss</label>
+                {% else %}
+                <label class="label label-success">Victory</label>
+                {% endif %}
+            </td>
+            <td><a href="{{base_path}}/game/{{game.game_id}}">Link</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+{% endblock %}

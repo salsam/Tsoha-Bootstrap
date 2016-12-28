@@ -6,6 +6,7 @@ Yleisiä linkkejä:
 * [Linkki dokumentaatiooni](https://github.com/salsam/Tsoha-Bootstrap/blob/master/doc/ChessDatabaseDocs.pdf)
 
 Staattiset sivut:
+* [Add new game](http://samisalo.users.cs.helsinki.fi/ChessDatabase/game_add)
 * [Game details](http://samisalo.users.cs.helsinki.fi/ChessDatabase/game_details)
 * [Game edit](http://samisalo.users.cs.helsinki.fi/ChessDatabase/game_edit)
 * [Game history](http://samisalo.users.cs.helsinki.fi/ChessDatabase/game_history)

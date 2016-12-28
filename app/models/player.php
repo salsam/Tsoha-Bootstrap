@@ -2,7 +2,7 @@
 
 class Player extends BaseModel {
 
-    public $playerID, $pname, $password, $email;
+    public $player_id, $pname, $password, $email;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
@@ -16,7 +16,7 @@ class Player extends BaseModel {
 
         foreach ($rows as $row) {
             $players[] = new Player(array(
-                'playerID' => $row['playerID'],
+                'player_id' => $row['player_id'],
                 'pname' => $row['pname'],
                 'password' => $row['password'],
                 'email' => $row['email']));
@@ -26,13 +26,14 @@ class Player extends BaseModel {
     }
 
     public static function find($id) {
-        $query = DB::connection()->prepare('SELECT * FROM Player WHERE id = :id LIMIT 1');
-        $query->execute(array('id' => $id));
+        $query = DB::connection()->prepare('SELECT * FROM Player WHERE player_id = :id LIMIT 1');
+        $query->bindParam(':id', $id);
+        $query->execute();
         $row = $query->fetch();
 
         if ($row) {
             $player = new Player(array(
-                'playerID' => $row['playerID'],
+                'player_id' => $row['player_id'],
                 'pname' => $row['pname'],
                 'password' => $row['password'],
                 'email' => $row['email']

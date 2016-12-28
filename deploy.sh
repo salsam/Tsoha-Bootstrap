@@ -18,7 +18,7 @@ echo "Suoritetaan komento php composer.phar dump-autoload..."
 ssh $USERNAME@users.cs.helsinki.fi "
 cd htdocs/$PROJECT_FOLDER
 php composer.phar dump-autoload
-bash permissions
+bash permissions.sh
 exit"
 
 echo "Valmis! Sovelluksesi on nyt valmiina osoitteessa $USERNAME.users.cs.helsinki.fi/$PROJECT_FOLDER"

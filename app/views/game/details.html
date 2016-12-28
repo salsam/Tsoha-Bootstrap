@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Game {{game.game_id}}</h1>
+
+<p>
+    <button class="btn btn-danger">Delete</button> <a href="{{base_path}}/game/edit" class="btn btn-default">Edit</a>
+</p>
+
+<ul>
+    <li><strong>Date:</strong> {{game.played}}</li>
+    <li><strong>Opponent:</strong>{{game.opponent}}</li>
+    <li><strong>Result:</strong>
+        {% if game.game_result=='draw' %}
+        <label class="label label-default">Draw</label>
+        {% elseif game.game_result=='loss'%}
+        <label class="label label-danger">Loss</label>
+        {% else %}
+        <label class="label label-success">Victory</label>
+        {% endif %}
+    </li>
+    <li><strong>Date modified:</strong>{{game.modified}}</li>
+</ul>
+
+<h2>Moves:</h2>
+<p>
+    {{game.moves}}
+</p>
+
+<h2>Notes:</h2>
+<p>
+    {{game.notes}}
+</p>
+{% endblock %}

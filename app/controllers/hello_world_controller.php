@@ -1,7 +1,5 @@
 <?php
 
-require 'app/models/player.php';
-
 class HelloWorldController extends BaseController {
 
     public static function index() {
@@ -10,18 +8,15 @@ class HelloWorldController extends BaseController {
     }
 
     public static function sandbox() {
-// Testaa koodiasi täällä
-        View::make('helloworld.html');
-
-        $a = Player::find(1);
-        $players = Player::all();
-// Kint-luokan dump-metodi tulostaa muuttujan arvon
+        $a = Game::find(1);
+        $players = Game::all();
+        
         Kint::dump($players);
         Kint::dump($a);
     }
 
-    public static function login() {
-        View::make('suunnitelmat/login.html');
+    public static function game_add() {
+        View::make('suunnitelmat/game_add.html');
     }
 
     public static function game_details() {
@@ -34,6 +29,10 @@ class HelloWorldController extends BaseController {
 
     public static function game_history() {
         View::make('suunnitelmat/game_history.html');
+    }
+
+    public static function login() {
+        View::make('suunnitelmat/login.html');
     }
 
     public static function organizer_edit() {
