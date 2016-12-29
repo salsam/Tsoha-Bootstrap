@@ -54,6 +54,9 @@ $routes->get('/tournament_list', function() {
 
 
 #Tästä alkavat dynaamiset sivut
+
+
+#Game-tauluun liittyvät
 $routes->get('/game', function() {
     GameController::history();
 });
@@ -76,4 +79,24 @@ $routes->get('/game/:id/delete', function($id) {
 
 $routes->get('/game/:id/edit', function($id) {
     GameController::edit($id);
+});
+
+#Organizer-tauluun liiittyvät
+$routes->post('/organizer', function() {
+    OrganizerController::store();
+});
+
+$routes->get('/organizer/new', function() {
+    OrganizerController::create();
+});
+
+
+#Player-tauluun liittyvät
+
+$routes->post('/player', function() {
+    PlayerController::store();
+});
+
+$routes->get('/player/new', function() {
+    PlayerController::create();
 });

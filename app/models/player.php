@@ -27,8 +27,7 @@ class Player extends BaseModel {
 
     public static function find($id) {
         $query = DB::connection()->prepare('SELECT * FROM Player WHERE player_id = :id LIMIT 1');
-        $query->bindParam(':id', $id);
-        $query->execute();
+        $query->execute(array('id' => $id));
         $row = $query->fetch();
 
         if ($row) {
@@ -42,6 +41,18 @@ class Player extends BaseModel {
         }
 
         return null;
+    }
+
+    public function save() {
+        $query = DB::connection()->prepare('INSERT INTO Player (pname, password, email) '
+                . 'VALUES (:name, :pass, :email) RETURNING player_id');
+        $query->execute(array(
+            'name' => $this->pname,
+            'pass' => $this->password,
+            'email' => $this->email
+        ));
+        $row = $query->fetch();
+        $this->player_id = $row['player_id'];
     }
 
 }

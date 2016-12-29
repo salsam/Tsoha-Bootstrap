@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Write your new user information below and click submit!</h1>
+
+<form>
+    <div class="form-group">
+        <label>New password</label>
+        <input class="form-control" type="password">
+    </div>
+    <div class="form-group">
+        <label>New email</label>
+        <input class="form-control" value={{player.email}} type="email">
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+    </div>
+</form>
+{% endblock %}
