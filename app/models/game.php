@@ -32,6 +32,17 @@ class Game extends BaseModel {
         return $games;
     }
 
+    public function delete() {
+        try {
+            $query = DB::connection()->prepare('DELETE FROM Game WHERE game_id=:id');
+            $query->execute(array('id' => $this->game_id));
+            unset($this);
+            echo 'Record deleted successfully!';
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
     public static function find($id) {
         $query = DB::connection()->prepare('SELECT * FROM Game WHERE game_id = :id LIMIT 1');
         $query->execute(array('id' => $id));
@@ -53,6 +64,25 @@ class Game extends BaseModel {
         }
 
         return null;
+    }
+
+    public function save() {
+        $query = DB::connection()->prepare('INSERT INTO Game (player, tournament, '
+                . 'played, opponent, game_result, moves, notes, modified) '
+                . 'VALUES (:player, :tournament, :played, :opponent, :result, '
+                . ':moves, :notes, :modified) RETURNING game_id');
+        $query->execute(array(
+            'player' => $this->player,
+            'tournament' => $this->tournament,
+            'played' => $this->played,
+            'opponent' => $this->opponent,
+            'result' => $this->game_result,
+            'moves' => $this->moves,
+            'notes' => $this->notes,
+            'modified' => $this->modified));
+        $row = $query->fetch();
+
+        $this->game_id = $row['game_id'];
     }
 
 }

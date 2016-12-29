@@ -58,6 +58,22 @@ $routes->get('/game', function() {
     GameController::history();
 });
 
+$routes->post('/game', function() {
+    GameController::store();
+});
+
+$routes->get('/game/new', function() {
+    GameController::create();
+});
+
 $routes->get('/game/:id', function($id) {
     GameController::details($id);
+});
+
+$routes->get('/game/:id/delete', function($id) {
+    GameController::delete($id);
+});
+
+$routes->get('/game/:id/edit', function($id) {
+    GameController::edit($id);
 });

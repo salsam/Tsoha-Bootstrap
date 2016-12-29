@@ -1,16 +1,47 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+<h1>Editing game {{game.game_id}}</h1>
+
+<form method="post" action="{{base_path}}/game/{{game.game_id}}">
+    <div class="form-group">
+        <label>Tournament</label>
+        <input name="tournament" class="form-control" type="number" value={{game.tournament}}>
+    </div>
+    <div class="form-group">
+        <label>Date</label>
+        <input name="played" class="form-control" type="date" value={{game.played}}>
+    </div>
+    <div class="form-group">
+        <label>Opponent</label>
+        <input name="opponent" class="form-control" type="text" value={{game.opponent}}>
+    </div>
+
+    <div class="radio">
+        <label class="label label-success">
+            <input name="victory" type="radio">Victory
+        </label>
+    </div>
+    <div class="radio">
+        <label class="label label-default">
+            <input name="draw" type="radio">Draw
+        </label>
+    </div>
+    <div class="radio">
+        <label class="label label-danger">
+            <input name="loss" type="radio">Loss
+        </label>
+    </div>
+
+    <div class="form-group">
+        <label>Moves</label>
+        <input name="moves" class="form-control" type="text" value={{game.moves}}>
+    </div>
+    <div class="form-group">
+        <label>Notes</label>
+        <input name="notes" class="form-control" type="text" value={{game.notes}}>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+    </div>
+</form>
+{% endblock %}
