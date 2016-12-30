@@ -1,9 +1,7 @@
 --Player-taulun testidata
-INSERT INTO Player (pname, password, email) VALUES ('a', 'a', 'a');
-INSERT INTO Player (pname, password, email) VALUES ('b', 'b', 'b');
-
---Organizer-taulu testidata
-INSERT INTO Organizer (oname, password, email) VALUES ('c','c','c');
+INSERT INTO Player (pname, password, email, organizer) VALUES ('a', 'a', 'a', false);
+INSERT INTO Player (pname, password, email, organizer) VALUES ('b', 'b', 'b', false);
+INSERT INTO Player (pname, password, email, organizer) VALUES ('c','c','c', true);
 
 --Tournament-taulun testidata
 INSERT INTO Tournament (tname, organizer, start_date, end_date, game_format, tournament_format,

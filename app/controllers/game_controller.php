@@ -51,20 +51,26 @@ class GameController extends BaseController {
             $result = 'loss';
         }
 
-        $game = new Game(array(
+        $attributes = array(
             'tournament' => $params['tournament'],
             'played' => $params['played'],
             'opponent' => $params['opponent'],
             'game_result' => $result,
-            'moves' => $params['moves'],
             'notes' => $params['notes'],
             'modified' => date('Y/m/d')
-        ));
+        );
 
-        $game->save();
-        Redirect::to('/game/' . $game->game_id, array('message', 'Game has been added'));
+        $game = new Game($attributes);
+        $errors = $game->errors();
+
+        if (count($errors) == 0) {
+            $game->save();
+            Redirect::to('/game/' . $game->game_id, array('message' => 'Game has been added'));
+        } else {
+            View::make('game/new.html', array('errors' => $errors, 'attributes' => $attributes));
+        }
     }
-    
+
     public static function update() {
         
     }

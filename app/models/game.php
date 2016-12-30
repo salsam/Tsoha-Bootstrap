@@ -2,11 +2,13 @@
 
 class Game extends BaseModel {
 
-    public $game_id, $player, $tournament, $played, $opponent, $game_result, $moves,
+    public $game_id, $player, $tournament, $played, $opponent, $game_result,
             $notes, $modified;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
+        $this->validators = array('validate_played', 'validate_opponent',
+             'validate_tournament');
     }
 
     public static function all() {
@@ -23,7 +25,6 @@ class Game extends BaseModel {
                 'played' => $row['played'],
                 'opponent' => $row['opponent'],
                 'game_result' => $row['game_result'],
-                'moves' => $row['moves'],
                 'notes' => $row['notes'],
                 'modified' => $row['modified']
             ));
@@ -56,7 +57,6 @@ class Game extends BaseModel {
                 'played' => $row['played'],
                 'opponent' => $row['opponent'],
                 'game_result' => $row['game_result'],
-                'moves' => $row['moves'],
                 'notes' => $row['notes'],
                 'modified' => $row['modified']
             ));
@@ -68,21 +68,37 @@ class Game extends BaseModel {
 
     public function save() {
         $query = DB::connection()->prepare('INSERT INTO Game (player, tournament, '
-                . 'played, opponent, game_result, moves, notes, modified) '
+                . 'played, opponent, game_result, notes, modified) '
                 . 'VALUES (:player, :tournament, :played, :opponent, :result, '
-                . ':moves, :notes, :modified) RETURNING game_id');
+                . ':notes, :modified) RETURNING game_id');
         $query->execute(array(
             'player' => $this->player,
             'tournament' => $this->tournament,
             'played' => $this->played,
             'opponent' => $this->opponent,
             'result' => $this->game_result,
-            'moves' => $this->moves,
             'notes' => $this->notes,
-            'modified' => $this->modified));
+            'modified' => $this->modified
+        ));
         $row = $query->fetch();
 
         $this->game_id = $row['game_id'];
+    }
+
+    public function validate_played() {
+        return $this->validate_past_date($this->played);
+    }
+
+    public function validate_opponent() {
+        return $this->validate_string_length($this->opponent, 20);
+    }
+
+    public function validate_player() {
+        return $this->validate_number($this->player);
+    }
+
+    public function validate_tournament() {
+        return $this->validate_number($this->tournament);
     }
 
 }

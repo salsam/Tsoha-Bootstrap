@@ -12,11 +12,12 @@ class PlayerController extends BaseController {
         $player = new Player(array(
             'pname' => $params['pname'],
             'password' => $params['pword'],
-            'email' => $params['email']
+            'email' => $params['email'],
+            'organizer' => 'f'
         ));
 
         $player->save();
-        Redirect::to('/player/' . $player->player_id, array('message', 'Player has been added!'));
+        Redirect::to('', array('message', 'Player has been added!'));
     }
 
 }

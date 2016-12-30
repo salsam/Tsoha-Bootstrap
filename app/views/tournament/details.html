@@ -1,16 +1,25 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+<h1>Tournament {{tourney.tournament_id}}</h1>
+
+<p>
+    <a href="/game/{{tourney.tournament_id}}/delete" class="btn btn-danger">Delete</a>
+    <a href="/game/{{tourney.tournament_id}}/edit" class="btn btn-default">Edit</a>
+</p>
+
+<ul>
+    <li><strong>Name:</strong>{{tourney.tname}}</li>
+    <li><strong>Start date:</strong>{{tourney.start_date}}</li>
+    <li><strong>End date:</strong> {{tourney.end_date}}</li>
+    <li><strong>Organizer:</strong>{{tourney.organizer}}</li>
+    <li><strong>Game format:</strong>{{tourney.game_format}}</li>
+    <li><strong>Tournament format:</strong>{{tourney.tournament_format}}</li>
+    <li><strong>Participants:</strong>{{tourney.participants}}</li>
+    <li><strong>Capacity:</strong>{{tourney.capacity}}</li>
+    <li><strong>Date modified:</strong>{{tourney.modified}}</li>
+</ul>
+
+<h2>Details:</h2>
+<p>{{tourney.details}}</p>
+
+{% endblock %}

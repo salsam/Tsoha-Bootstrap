@@ -2,7 +2,7 @@
 
 class Player extends BaseModel {
 
-    public $player_id, $pname, $password, $email;
+    public $player_id, $pname, $password, $email, $organizer;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
@@ -19,7 +19,8 @@ class Player extends BaseModel {
                 'player_id' => $row['player_id'],
                 'pname' => $row['pname'],
                 'password' => $row['password'],
-                'email' => $row['email']));
+                'email' => $row['email'],
+                'organizer' => $row['organizer']));
         }
 
         return $players;
@@ -35,7 +36,8 @@ class Player extends BaseModel {
                 'player_id' => $row['player_id'],
                 'pname' => $row['pname'],
                 'password' => $row['password'],
-                'email' => $row['email']
+                'email' => $row['email'],
+                'organizer' => $row['organizer']
             ));
             return $player;
         }
@@ -44,15 +46,32 @@ class Player extends BaseModel {
     }
 
     public function save() {
-        $query = DB::connection()->prepare('INSERT INTO Player (pname, password, email) '
-                . 'VALUES (:name, :pass, :email) RETURNING player_id');
+        $query = DB::connection()->prepare('INSERT INTO Player (pname, password, email, organizer) '
+                . 'VALUES (:name, :pass, :email, :organizer) RETURNING player_id');
         $query->execute(array(
             'name' => $this->pname,
             'pass' => $this->password,
-            'email' => $this->email
+            'email' => $this->email,
+            'organizer' => $this->organizer
         ));
         $row = $query->fetch();
         $this->player_id = $row['player_id'];
+    }
+
+    public function validate_name() {
+        return $this->validate_string_length($this->pname, 20);
+    }
+    
+    public function validate_password() {
+        return $this->validate_string_length($this->password, 20);
+    }
+    
+    public function validate_email() {
+        $errors=array();
+        
+        
+        
+        return $errors;
     }
 
 }
