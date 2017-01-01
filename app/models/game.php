@@ -8,7 +8,7 @@ class Game extends BaseModel {
     public function __construct($attributes) {
         parent::__construct($attributes);
         $this->validators = array('validate_played', 'validate_opponent',
-             'validate_tournament');
+            'validate_tournament');
     }
 
     public static function all() {
@@ -17,17 +17,19 @@ class Game extends BaseModel {
         $rows = $query->fetchAll();
         $games = array();
 
-        foreach ($rows as $row) {
-            $games[] = new Game(array(
-                'game_id' => $row['game_id'],
-                'player' => $row['player'],
-                'tournament' => $row['tournament'],
-                'played' => $row['played'],
-                'opponent' => $row['opponent'],
-                'game_result' => $row['game_result'],
-                'notes' => $row['notes'],
-                'modified' => $row['modified']
-            ));
+        if (!empty($rows)) {
+            foreach ($rows as $row) {
+                $games[] = new Game(array(
+                    'game_id' => $row['game_id'],
+                    'player' => $row['player'],
+                    'tournament' => $row['tournament'],
+                    'played' => $row['played'],
+                    'opponent' => $row['opponent'],
+                    'game_result' => $row['game_result'],
+                    'notes' => $row['notes'],
+                    'modified' => $row['modified']
+                ));
+            }
         }
 
         return $games;
@@ -38,7 +40,7 @@ class Game extends BaseModel {
             $query = DB::connection()->prepare('DELETE FROM Game WHERE game_id=:id');
             $query->execute(array('id' => $this->game_id));
             unset($this);
-            echo 'Record deleted successfully!';
+            echo 'Game deleted successfully!';
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
@@ -70,7 +72,7 @@ class Game extends BaseModel {
         $query = DB::connection()->prepare('INSERT INTO Game (player, tournament, '
                 . 'played, opponent, game_result, notes, modified) '
                 . 'VALUES (:player, :tournament, :played, :opponent, :result, '
-                . ':notes, :modified) RETURNING game_id');
+                . ':notes, :modifie) RETURNING game_id');
         $query->execute(array(
             'player' => $this->player,
             'tournament' => $this->tournament,
@@ -78,11 +80,27 @@ class Game extends BaseModel {
             'opponent' => $this->opponent,
             'result' => $this->game_result,
             'notes' => $this->notes,
-            'modified' => $this->modified
+            'modifie' => $this->modified
         ));
         $row = $query->fetch();
-
         $this->game_id = $row['game_id'];
+    }
+
+    public function update() {
+        $query = DB::connection()->prepare('UPDATE Game SET (player, tournament, '
+                . 'played, opponent, game_result, notes, modified) '
+                . '=(:player, :tournament, :played, :opponent, :result, '
+                . ':notes, :modified) WHERE game_id=:id');
+        $query->execute(array(
+            'player' => $this->player,
+            'tournament' => $this->tournament,
+            'played' => $this->played,
+            'opponent' => $this->opponent,
+            'result' => $this->game_result,
+            'notes' => $this->notes,
+            'modified' => $this->modified,
+            'id' => $this->game_id
+        ));
     }
 
     public function validate_played() {

@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
+{% import "macros/forms.html" as forms %}
 <h1>Tournament {{tourney.tournament_id}}</h1>
 
 <p>
-    <a href="/game/{{tourney.tournament_id}}/delete" class="btn btn-danger">Delete</a>
-    <a href="/game/{{tourney.tournament_id}}/edit" class="btn btn-default">Edit</a>
+    {{forms.delete_button("#{base_path}/tournament/#{tourney.tournament_id}/delete")}}
+    {{forms.edit_button("#{base_path}/tournament/#{tourney.tournament_id}/edit")}}
 </p>
 
 <ul>

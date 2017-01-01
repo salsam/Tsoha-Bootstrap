@@ -22,9 +22,12 @@ class BaseModel {
 
         foreach ($this->validators as $validator) {
             // Kutsu validointimetodia tässä ja lisää sen palauttamat virheet errors-taulukkoon
-            $errors = array_merge($errors, $this->{$validator}());
-        }
+            $add = $this->{$validator}();
 
+            if ($add != NULL and is_array($add)) {
+                $errors = array_merge($errors, $add);
+            }
+        }
         return $errors;
     }
 
@@ -32,17 +35,31 @@ class BaseModel {
         $errors = array();
 
         if ($param == null) {
-            $errors[] = 'Attribute can"t be null';
+            $errors[] = "Attribute can't be null";
         }
 
         return $errors;
     }
 
-    public function validate_number($param) {
+    public function validate_number($num) {
         $errors = array();
 
-        if ($param == null || !is_numeric($param)) {
-            $errors[]='Value must be a number';
+        if ($num == null || (!is_numeric($num))) {
+            $errors[] = $num . ' is not a number!';
+        }
+
+        return $errors;
+    }
+
+    public function validate_string_min($str, $len) {
+        $errors = array();
+
+        if ($str == '' || $str == null) {
+            $errors[] = "Field can't be empty!";
+        }
+
+        if (strlen($str) < $len) {
+            $errors[] = $str . ' is too short! Minimum length: ' . $len;
         }
 
         return $errors;
@@ -52,11 +69,11 @@ class BaseModel {
         $errors = array();
 
         if ($str == '' || $str == null) {
-            $errors[] = 'Name can"t be empty!';
+            $errors[] = "Field can't be empty!";
         }
 
         if (strlen($str) > $len) {
-            $errors[] = 'Name is too long!';
+            $errors[] = $str . ' is too long! Please choose a string of length ' . $len . 'or less!';
         }
 
         return $errors;

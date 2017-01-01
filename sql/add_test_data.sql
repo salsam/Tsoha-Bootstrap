@@ -5,7 +5,7 @@ INSERT INTO Player (pname, password, email, organizer) VALUES ('c','c','c', true
 
 --Tournament-taulun testidata
 INSERT INTO Tournament (tname, organizer, start_date, end_date, game_format, tournament_format,
-participants, capacity, modified) VALUES ('t', 1,'2016-12-12','2016-12-24', 
+participants, capacity, modified) VALUES ('t', 1,'2017-12-12','2017-12-24', 
 'gf', 'tf', 1, 2, NOW());
 
 --Game-taulun testidata

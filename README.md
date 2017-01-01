@@ -18,7 +18,12 @@ Staattiset sivut:
 * [Player registration](http://samisalo.users.cs.helsinki.fi/ChessDatabase/register)
 * [Organizer registration](http://samisalo.users.cs.helsinki.fi/ChessDatabase/organizer_register)
 
+Dynaamiset sivut:
+* [Game list](http://samisalo.users.cs.helsinki.fi/ChessDatabase/game)
+* [Tournament list](http://samisalo.users.cs.helsinki.fi/ChessDatabase/tournament)
+
+
 ## Työn aihe
 
 Työn aiheena on shakkitietokanta, jossa pidetään kirjaa turnauksista, niihin osallituneista pelaajista ja pelaajien välisistä pelistä.
-Pelaajat voivat kirjautua tietokantaan lisätäkseen pelejä. Turnauksen järjestäjät taas voivat kirjautua ja lisätä turnauksia sekä osallistumisia(liitostaulu pelaajan ja turnauksen välillä). Pelaajista pidetään yllä nimi, peleistä lopputulos ja päivämäärä. Turnauksista pidetään yllätietoa päivämäärästä, potista ja nimestä.
+Pelaajat voivat kirjautua tietokantaan lisätäkseen pelejä. Turnauksen järjestäjät taas voivat kirjautua ja lisätä turnauksia sekä osallistumisia(liitostaulu pelaajan ja turnauksen välillä). Pelaajista pidetään yllä nimi,salasana ja sähköposti. Peleistä vastustaja, päivämäärä,lopputulos ja muokkauspäivämäärä sekä valinnaisesti muistiinpanot. Turnauksista pidetään yllätietoa alku-/loppupäivämäärästä,  nimestä, formaatista (peli ja turnaus).

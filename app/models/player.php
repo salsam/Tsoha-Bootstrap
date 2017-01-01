@@ -6,6 +6,7 @@ class Player extends BaseModel {
 
     public function __construct($attributes) {
         parent::__construct($attributes);
+        $this->validators = array('validate_name', 'validate_password', 'validate_email');
     }
 
     public static function all() {
@@ -24,6 +25,17 @@ class Player extends BaseModel {
         }
 
         return $players;
+    }
+
+    public function delete() {
+        try {
+            $query = DB::connection()->prepare('DELETE FROM Player WHERE player_id=:id');
+            $query->execute(array('id' => $this->player_id));
+            unset($this);
+            echo 'Player deleted successfully';
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 
     public static function find($id) {
@@ -61,16 +73,22 @@ class Player extends BaseModel {
     public function validate_name() {
         return $this->validate_string_length($this->pname, 20);
     }
-    
+
     public function validate_password() {
-        return $this->validate_string_length($this->password, 20);
+        return array_merge($this->validate_string_length($this->password, 20), $this->validate_string_min($this->password, 5));
     }
-    
+
     public function validate_email() {
-        $errors=array();
-        
-        
-        
+        return $this->validate_string_length($this->email, 30);
+    }
+
+    public function validate_organizer() {
+        $errors = array();
+
+        if (!is_bool($this->organizer)) {
+            $errors[] = 'Organizer must be true or false';
+        }
+
         return $errors;
     }
 

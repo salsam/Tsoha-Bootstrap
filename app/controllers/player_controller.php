@@ -6,18 +6,38 @@ class PlayerController extends BaseController {
         View::make('player/new.html');
     }
 
+    public static function delete($id) {
+        $player = Player::find($id);
+
+        if ($player != null) {
+            $player->delete();
+            Redirect::to('/player', array('message' => 'Player has been deleted'));
+        } else {
+            throw new Exception(array('message' => 'Player not found'));
+        }
+    }
+
     public static function store() {
         $params = $_POST;
 
-        $player = new Player(array(
+        $attributes = array(
             'pname' => $params['pname'],
             'password' => $params['pword'],
             'email' => $params['email'],
-            'organizer' => 'f'
-        ));
+            'organizer' => FALSE
+        );
 
-        $player->save();
-        Redirect::to('', array('message', 'Player has been added!'));
+        $player = new Player($attributes);
+        $errors = $player->errors();
+
+        if (count($errors) == 0) {
+            $player->save();
+            Redirect::to('', array('message', 'Player has been added!'));
+        } else {
+            View::make('player/new.html', array(
+                'errors' => $errors,
+                'attributes' => $attributes));
+        }
     }
 
 }

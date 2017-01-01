@@ -15,6 +15,7 @@
     </thead>
 
     <tbody>
+        {% if not games is empty %}
         {% for game in games %}
         <tr>
             <td>{{game.played}}</td>
@@ -31,6 +32,7 @@
             <td><a href="{{base_path}}/game/{{game.game_id}}">Link</a></td>
         </tr>
         {% endfor %}
+        {% endif %}
     </tbody>
 
 </table>

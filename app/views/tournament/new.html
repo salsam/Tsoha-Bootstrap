@@ -2,40 +2,50 @@
 {% block content %}
 <h1>Add a new tournament by filling in details below and pressing submit!</h1>
 
+{% if errors %}
+<div class="alert alert-danger">
+    <ul>
+        {% for error in errors %}
+        <li>{{error}}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
 <form method="post" action="{{base_path}}/tournament">
     <div class="form-group">
         <label>Organizer</label>
-        <input name="org" class="form-control" type="number">
+        <input name="org" class="form-control" type="number" value="{{attributes.organizer}}">
     </div>
     <div class="form-group">
         <label>Name</label>
-        <input name="name" class="form-control" type="text">
+        <input name="name" class="form-control" type="text" value="{{attributes.tname}}">
     </div>
     <div class="form-group">
         <label>Start date</label>
-        <input name="start" class="form-control" type="date">
+        <input name="start" class="form-control" type="date" value="{{attributes.start_date}}">
     </div>
     <div class="form-group">
         <label>End date</label>
-        <input name="end" class="form-control" type="date">
+        <input name="end" class="form-control" type="date" value="{{attributes.end_date}}">
     </div>
     <div class="form-group">
         <label>Game format</label>
-        <input name="gameform" class="form-control" type="text">
+        <input name="gameform" class="form-control" type="text" value="{{attributes.game_format}}">
     </div>
     <div class="form-group">
         <label>Tournament format</label>
-        <input name="tourform" class="form-control" type="text">
-    </div>
-    <div class="form-group">
-        <label>Game format</label>
-        <input name="gameform" class="form-control" type="text">
+        <input name="tourform" class="form-control" type="text" value="{{attributes.tournament_format}}">
     </div>
     <div class="form-group">
         <label>Capacity</label>
-        <input name="cap" class="form-control" type="number">
+        <input name="cap" class="form-control" type="number" value="{{attributes.capacity}}">
     </div>
 
+    <div class="form-group">
+        <label>Details</label>
+        <input name="details" class="form-control" type="text" value="{{attributes.details}}">
+    </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>

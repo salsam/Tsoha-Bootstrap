@@ -2,22 +2,23 @@ CREATE TYPE gresult AS ENUM ('victory', 'draw', 'loss');
 
 CREATE TABLE Player(
   player_id SERIAL PRIMARY KEY,
-  pname varchar(50) UNIQUE NOT NULL,
-  password varchar(50) NOT NULL,
-  email varchar(50) UNIQUE NOT NULL,
+  pname varchar(20) UNIQUE NOT NULL,
+  password varchar(20) NOT NULL,
+  email varchar(30) UNIQUE NOT NULL,
   organizer boolean NOT NULL
 );
 
 CREATE TABLE Tournament(
   tournament_id SERIAL PRIMARY KEY,
   organizer INTEGER REFERENCES Player(player_id),
-  tname varchar(50) UNIQUE NOT NULL,
+  tname varchar(20) UNIQUE NOT NULL,
   start_date DATE NOT NULL,
   end_date DATE NOT NULL,
-  game_format varchar(50) NOT NULL,
-  tournament_format varchar(50) NOT NULL,
+  game_format varchar(20) NOT NULL,
+  tournament_format varchar(20) NOT NULL,
   participants INTEGER NOT NULL,
   capacity INTEGER NOT NULL,
+  details varchar(5000),
   modified DATE NOT NULL
 );
 
@@ -33,7 +34,7 @@ CREATE TABLE Game(
   player INTEGER REFERENCES Player(player_id),
   tournament INTEGER REFERENCES Tournament(tournament_id),
   played DATE NOT NULL,
-  opponent varchar(50),
+  opponent varchar(20),
   game_result gresult NOT NULL,
   notes varchar(5000),
   modified DATE NOT NULL

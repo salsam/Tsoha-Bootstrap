@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
+{% import "macros/forms.html" as forms %}
 <h1>Game {{game.game_id}}</h1>
 
 <p>
-    <a href="{{base_path}}/game/{{game.game_id}}/delete" class="btn btn-danger">Delete</a>
-    <a href="{{base_path}}/game/{{game.game_id}}/edit" class="btn btn-default">Edit</a>
+    {{forms.delete_button("#{base_path}/game/#{game.game_id}/delete")}}
+    {{forms.edit_button("#{base_path}/game/#{game.game_id}/edit")}}
 </p>
 
 <ul>
