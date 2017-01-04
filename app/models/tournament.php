@@ -2,12 +2,21 @@
 
 class Tournament extends BaseModel {
 
-    public $tournament_id, $organizer, $tname, $start_date, $end_date, $game_format,
-            $tournament_format, $participants, $capacity, $details, $modified;
+    public $tournament_id,
+            $organizer,
+            $tname,
+            $start_date,
+            $end_date,
+            $game_format,
+            $tournament_format,
+            $participants,
+            $capacity,
+            $details,
+            $modified;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
-        $this->validators = array('validate_start');
+        $this->validators = array('validate_start', 'validate_end', 'validate_duration');
     }
 
     public static function all() {
@@ -41,7 +50,6 @@ class Tournament extends BaseModel {
         try {
             $query = DB::connection()->prepare('DELETE FROM Tournament WHERE tournament_id=:id');
             $query->execute(array('id' => $this->tournament_id));
-            unset($this);
             echo 'Tournament deleted successfully';
         } catch (PDOException $e) {
             echo $e->getMessage();
@@ -113,11 +121,26 @@ class Tournament extends BaseModel {
             'mod' => $this->modified
         ));
     }
-    
-    
 
     public function validate_start() {
-        return $this->validate_future_date($this->start_date);
+        return $this->validate_future_date($this->start_date, "Tournament start date must not be past!");
+    }
+
+    public function validate_end() {
+        return $this->validate_future_date($this->start_date, "Tournament end date must not be past!");
+    }
+
+    public function validate_duration() {
+        $errors = array();
+        if (count($errors) == 0) {
+            if (strtotime($this->end_date) < strtotime($this->start_date)) {
+                $error[] = "Start date must be smaller or equal than end date";
+            }
+        }
+    }
+    
+    public function validate_capacity() {
+        return $this->validate_number($this->capacity, "Capacity");
     }
 
 }

@@ -33,7 +33,7 @@ CREATE TABLE Game(
   game_id SERIAL PRIMARY KEY,
   player INTEGER REFERENCES Player(player_id),
   tournament INTEGER REFERENCES Tournament(tournament_id),
-  played DATE NOT NULL,
+  game_date DATE NOT NULL,
   opponent varchar(20),
   game_result gresult NOT NULL,
   notes varchar(5000),

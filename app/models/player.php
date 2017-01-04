@@ -31,7 +31,6 @@ class Player extends BaseModel {
         try {
             $query = DB::connection()->prepare('DELETE FROM Player WHERE player_id=:id');
             $query->execute(array('id' => $this->player_id));
-            unset($this);
             echo 'Player deleted successfully';
         } catch (PDOException $e) {
             echo $e->getMessage();

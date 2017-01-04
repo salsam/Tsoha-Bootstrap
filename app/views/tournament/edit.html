@@ -14,34 +14,30 @@
 
 <form method="post" action="{{base_path}}/tournament/{{tourney.tournament_id}}">
     <div class="form-group">
-        <label>Name</label>
-        <input name="name" class="form-control" type="text" value={{tourney.tname}}>
-    </div>
-    <div class="form-group">
-        <label>Start date</label>
-        <input name="start" class="form-control" type="date" value={{tourney.start_date}}>
-    </div>
-    <div class="form-group">
-        <label>End date</label>
-        <input name="end" class="form-control" type="date" value={{tourney.start_date}}>
-    </div>
-    <div class="form-group">
-        <label>Game format</label>
-        <input name="gameform" class="form-control" type="text" value={{tourney.game_format}}>
-    </div>
-    <div class="form-group">
-        <label>Tournament format</label>
-        <input name="tourform" class="form-control" type="text" value={{tourney.tournament_format}}>
-    </div>
-    <div class="form-group">
-        <label>Capacity</label>
-        <input name="cap" class="form-control" type="number" value={{tourney.capacity}}>
+        <label>Name</label><br>
+        <input name="name" type="text" value="{{tourney.tname}}" size="20" maxlength="20">
+        <br>
+        <label>Start date</label><br>
+        <input name="start" type="date" value="{{tourney.start_date}}">
+        <br>
+        <label>End date</label><br>
+        <input name="end" type="date" value="{{tourney.start_date}}">
+        <br>
+        <label>Game format</label><br>
+        <input name="gameform" type="text" value="{{tourney.game_format}}" size="20" maxlength="20">
+        <br>
+        <label>Tournament format</label><br>
+        <input name="tourform" type="text" value="{{tourney.tournament_format}}" size="20" maxlength="20">
+        <br>
+        <label>Capacity</label><br>
+        <input name="cap" type="number" value="{{tourney.capacity}}">
     </div>
     
     
     <div class="form-group">
-        <label>Details</label>
-        <input name="details" class="form-control" type="text" value={{tourney.details}}>
+        <label>Details</label><br>
+        <textarea name="details" value="{{tourney.details}}" cols="100" rows="10" maxlength="5000">
+        </textarea>
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Save changes</button>

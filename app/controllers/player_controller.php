@@ -11,6 +11,7 @@ class PlayerController extends BaseController {
 
         if ($player != null) {
             $player->delete();
+            unset($player);
             Redirect::to('/player', array('message' => 'Player has been deleted'));
         } else {
             throw new Exception(array('message' => 'Player not found'));

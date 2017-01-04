@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Add a new game</h1>
-
 {% if errors %}
 <div class="alert alert-danger">
     <ul>
@@ -15,39 +14,40 @@
 <form method="post" action="{{base_path}}/game">
     <div class="form-group">
         <label>Tournament</label>
-        <input name="tournament" class="form-control" type="number" value="{{attributes.tournament}}">
-    </div>
-    <div class="form-group">
+        <br>
+        <input name="tournament" type="number" value="{{game.tournament}}" required>
+        <br>
         <label>Date</label>
-        <input name="played" class="form-control" type="date" value="{{attributes.played}}">
-    </div>
-    <div class="form-group">
+        <br>
+        <input name="game_date" type="date" value="{{game.game_date}}" required>
+        <br>
         <label>Opponent</label>
-        <input name="opponent" class="form-control" type="text" value="{{attributes.opponent}}">
+        <br>
+        <input name="opponent" type="text" value="{{game.opponent}}" size="20" maxlength="20" required>
     </div>
 
     <div class="radio">
         <label class="label label-success">
-            <input name="victory" type="radio">Victory
+            <input name="result" type="radio" value='victory' checked>Victory
         </label>
-    </div>
-    <div class="radio">
+        <br>
         <label class="label label-default">
-            <input name="draw" type="radio">Draw
+            <input name="result" type="radio" value='draw'>Draw
         </label>
-    </div>
-    <div class="radio">
+        <br>
         <label class="label label-danger">
-            <input name="loss" type="radio">Loss
+            <input name="result" type="radio" value='loss'>Loss
         </label>
     </div>
 
     <div class="form-group">
         <label>Notes</label>
-        <input name="notes" class="form-control" type="text" value="{{attributes.notes}}">
+        <br>
+        <textarea name="notes" placeholder="{{game.notes}}" cols="100" rows="10" 
+                  maxlength="5000"></textarea>
     </div>
     <div class="form-group">
-        <button type="submit" class="btn btn-primary">Add game</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </div>
 </form>
 {% endblock %}

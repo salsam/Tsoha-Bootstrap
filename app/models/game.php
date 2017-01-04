@@ -2,12 +2,12 @@
 
 class Game extends BaseModel {
 
-    public $game_id, $player, $tournament, $played, $opponent, $game_result,
+    public $game_id, $player, $tournament, $game_date, $opponent, $game_result,
             $notes, $modified;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
-        $this->validators = array('validate_played', 'validate_opponent',
+        $this->validators = array('validate_game_date', 'validate_opponent',
             'validate_tournament');
     }
 
@@ -23,7 +23,7 @@ class Game extends BaseModel {
                     'game_id' => $row['game_id'],
                     'player' => $row['player'],
                     'tournament' => $row['tournament'],
-                    'played' => $row['played'],
+                    'game_date' => $row['game_date'],
                     'opponent' => $row['opponent'],
                     'game_result' => $row['game_result'],
                     'notes' => $row['notes'],
@@ -39,7 +39,6 @@ class Game extends BaseModel {
         try {
             $query = DB::connection()->prepare('DELETE FROM Game WHERE game_id=:id');
             $query->execute(array('id' => $this->game_id));
-            unset($this);
             echo 'Game deleted successfully!';
         } catch (PDOException $e) {
             echo $e->getMessage();
@@ -56,7 +55,7 @@ class Game extends BaseModel {
                 'game_id' => $row['game_id'],
                 'player' => $row['player'],
                 'tournament' => $row['tournament'],
-                'played' => $row['played'],
+                'game_date' => $row['game_date'],
                 'opponent' => $row['opponent'],
                 'game_result' => $row['game_result'],
                 'notes' => $row['notes'],
@@ -70,13 +69,13 @@ class Game extends BaseModel {
 
     public function save() {
         $query = DB::connection()->prepare('INSERT INTO Game (player, tournament, '
-                . 'played, opponent, game_result, notes, modified) '
+                . 'game_date, opponent, game_result, notes, modified) '
                 . 'VALUES (:player, :tournament, :played, :opponent, :result, '
                 . ':notes, :modifie) RETURNING game_id');
         $query->execute(array(
             'player' => $this->player,
             'tournament' => $this->tournament,
-            'played' => $this->played,
+            'played' => $this->game_date,
             'opponent' => $this->opponent,
             'result' => $this->game_result,
             'notes' => $this->notes,
@@ -88,13 +87,13 @@ class Game extends BaseModel {
 
     public function update() {
         $query = DB::connection()->prepare('UPDATE Game SET (player, tournament, '
-                . 'played, opponent, game_result, notes, modified) '
+                . 'game_date, opponent, game_result, notes, modified) '
                 . '=(:player, :tournament, :played, :opponent, :result, '
                 . ':notes, :modified) WHERE game_id=:id');
         $query->execute(array(
             'player' => $this->player,
             'tournament' => $this->tournament,
-            'played' => $this->played,
+            'played' => $this->game_date,
             'opponent' => $this->opponent,
             'result' => $this->game_result,
             'notes' => $this->notes,
@@ -103,20 +102,20 @@ class Game extends BaseModel {
         ));
     }
 
-    public function validate_played() {
-        return $this->validate_past_date($this->played);
+    public function validate_game_date() {
+        return $this->validate_past_date($this->game_date, "Game date must be earlier or today");
     }
 
     public function validate_opponent() {
-        return $this->validate_string_length($this->opponent, 20);
+        return $this->validate_string_length($this->opponent, 20, "Opponent");
     }
 
     public function validate_player() {
-        return $this->validate_number($this->player);
+        return $this->validate_number($this->player, "Player");
     }
 
     public function validate_tournament() {
-        return $this->validate_number($this->tournament);
+        return $this->validate_number($this->tournament, "Tournament");
     }
 
 }

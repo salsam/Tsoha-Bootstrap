@@ -2,26 +2,26 @@
 
 class BaseModel {
 
-    // "protected"-attribuutti on käytössä vain luokan ja sen perivien luokkien sisällä
+// "protected"-attribuutti on käytössä vain luokan ja sen perivien luokkien sisällä
     protected $validators;
 
     public function __construct($attributes = null) {
-        // Käydään assosiaatiolistan avaimet läpi
+// Käydään assosiaatiolistan avaimet läpi
         foreach ($attributes as $attribute => $value) {
-            // Jos avaimen niminen attribuutti on olemassa...
+// Jos avaimen niminen attribuutti on olemassa...
             if (property_exists($this, $attribute)) {
-                // ... lisätään avaimen nimiseen attribuuttin siihen liittyvä arvo
+// ... lisätään avaimen nimiseen attribuuttin siihen liittyvä arvo
                 $this->{$attribute} = $value;
             }
         }
     }
 
     public function errors() {
-        // Lisätään $errors muuttujaan kaikki virheilmoitukset taulukkona
+// Lisätään $errors muuttujaan kaikki virheilmoitukset taulukkona
         $errors = array();
 
         foreach ($this->validators as $validator) {
-            // Kutsu validointimetodia tässä ja lisää sen palauttamat virheet errors-taulukkoon
+// Kutsu validointimetodia tässä ja lisää sen palauttamat virheet errors-taulukkoon
             $add = $this->{$validator}();
 
             if ($add != NULL and is_array($add)) {
@@ -31,71 +31,83 @@ class BaseModel {
         return $errors;
     }
 
-    public function validate_not_null($param) {
+    public function validate_not_null($param, $field) {
         $errors = array();
 
         if ($param == null) {
-            $errors[] = "Attribute can't be null";
+            $errors[] = $field . " can't be null";
         }
 
         return $errors;
     }
 
-    public function validate_number($num) {
+    public function validate_number($num, $field) {
         $errors = array();
 
         if ($num == null || (!is_numeric($num))) {
-            $errors[] = $num . ' is not a number!';
+            $errors[] = $field . "must contain a number";
         }
 
         return $errors;
     }
 
-    public function validate_string_min($str, $len) {
+    public function validate_string_min($str, $len, $field) {
         $errors = array();
 
         if ($str == '' || $str == null) {
-            $errors[] = "Field can't be empty!";
+            $errors[] = $field . " can't be empty!";
         }
 
         if (strlen($str) < $len) {
-            $errors[] = $str . ' is too short! Minimum length: ' . $len;
+            $errors[] = $field . ' contains too short string! Minimum length: ' . $len;
         }
 
         return $errors;
     }
 
-    public function validate_string_length($str, $len) {
+    public function validate_string_length($str, $len, $field) {
         $errors = array();
 
         if ($str == '' || $str == null) {
-            $errors[] = "Field can't be empty!";
+            $errors[] = $field . " can't be empty!";
         }
 
         if (strlen($str) > $len) {
-            $errors[] = $str . ' is too long! Please choose a string of length ' . $len . 'or less!';
+            $errors[] = $field . " contains too long string. Please choose a string of length "
+                    . $len . "or less!";
         }
 
         return $errors;
     }
 
-    public function validate_past_date($date) {
+    public function validate_past_date($date, $message) {
         $errors = array();
 
         if (time() - strtotime($date) < 0) {
-            $errors[] = 'Date hasn"t been reached yet';
-        } else if ((time() - strtotime($date)) / 60 / 60 / 24 / 365 > 100) {
-            $errors[] = 'Date must be within last 100 years';
+            $errors[] = $message;
         }
 
         return $errors;
     }
 
-    public function validate_future_date($date) {
+    public function validate_future_date($date, $message) {
         $errors = array();
 
         if (strtotime($date) < time()) {
-            $errors[] = 'Date has to be in future';
+            $errors[] = $message;
+        }
+
+        return $errors;
+    }
+
+    public function validate_larger($smaller, $larger, $field1, $field2) {
+        $errors = array_merge($this->validate_number($smaller, $field1)
+                , $this->validate_number($larger, $field2));
+
+        if (count($errors) == 0) {
+            if ($larger < $smaller) {
+                $error[] = $field1 . " must be smaller or equal than " . $field2;
+            }
         }
 
         return $errors;

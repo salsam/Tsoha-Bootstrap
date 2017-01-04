@@ -18,7 +18,7 @@
         {% if not games is empty %}
         {% for game in games %}
         <tr>
-            <td>{{game.played}}</td>
+            <td>{{game.game_date}}</td>
             <td>{{game.opponent}}</td>
             <td>
                 {% if game.game_result=='draw' %}

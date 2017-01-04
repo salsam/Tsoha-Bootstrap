@@ -10,6 +10,7 @@ class TournamentController extends BaseController {
         $tourney = Tournament::find($id);
         if ($tourney != NULL) {
             $tourney->delete();
+            unset($tourney);
             Redirect::to("/tournament", array('message' => "Tournament deleted"));
         } else {
             throw new Exception($message = 'Tournament not found');
@@ -60,7 +61,7 @@ class TournamentController extends BaseController {
 
 
         if (count($errors) > 0) {
-            Redirect::to('tournament/new.html', array('errors' => $errors, 'attributes' => $attributes));
+            Redirect::to('tournament/new', array('errors' => $errors, 'attributes' => $attributes));
         } else {
             $tourney->save();
             Redirect::to('/tournament/' . $tourney->tournament_id, array('message' => 'Tournament has been added.'));

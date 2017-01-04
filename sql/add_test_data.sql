@@ -9,7 +9,7 @@ participants, capacity, modified) VALUES ('t', 1,'2017-12-12','2017-12-24',
 'gf', 'tf', 1, 2, NOW());
 
 --Game-taulun testidata
-INSERT INTO Game (player, tournament, played, opponent, game_result, modified) 
+INSERT INTO Game (player, tournament, game_date, opponent, game_result, modified) 
 VALUES (1, 1, '2016-12-24','d','victory','2016-12-24');
 
 --Participation-taulun testidata
