@@ -12,8 +12,8 @@ class Game extends BaseModel {
     }
 
     public static function all() {
-        $query = DB::connection()->prepare('SELECT * FROM Game');
-        $query->execute();
+        $query = DB::connection()->prepare('SELECT * FROM Game WHERE player=:id');
+        $query->execute(array('id' => BaseController::get_user_logged_in()->player_id));
         $rows = $query->fetchAll();
         $games = array();
 

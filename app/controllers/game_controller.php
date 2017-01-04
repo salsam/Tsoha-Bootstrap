@@ -43,6 +43,7 @@ class GameController extends BaseController {
         $params = $_POST;
 
         $attributes = array(
+            'player' => BaseController::get_user_logged_in()->player_id,
             'tournament' => $params['tournament'],
             'game_date' => $params['game_date'],
             'opponent' => $params['opponent'],

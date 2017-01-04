@@ -27,6 +27,26 @@ class Player extends BaseModel {
         return $players;
     }
 
+    public static function authenticate($username, $password) {
+        $query = DB::connection()->prepare('SELECT * FROM Player '
+                . 'WHERE pname=:name AND password=:pass LIMIT 1');
+        $query->execute(array('name' => $username, 'pass' => $password));
+        $row=$query->fetch();
+        
+        if ($row) {
+            $player = new Player(array(
+                'player_id' => $row['player_id'],
+                'pname' => $row['pname'],
+                'password' => $row['password'],
+                'email' => $row['email'],
+                'organizer' => $row['organizer']
+            ));
+            return $player;
+        } else {
+            return null;
+        }
+    }
+
     public function delete() {
         try {
             $query = DB::connection()->prepare('DELETE FROM Player WHERE player_id=:id');

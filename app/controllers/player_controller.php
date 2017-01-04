@@ -18,6 +18,24 @@ class PlayerController extends BaseController {
         }
     }
 
+    public static function handle_login() {
+        $params = $_POST;
+
+        $player = Player::authenticate($params['username'], $params['password']);
+
+        if (!$player) {
+            View::make('player/login.html', array('error' => 'Wrong username or password!'
+                , 'username' => $params['username']));
+        } else {
+            $_SESSION['player'] = $player->player_id;
+            Redirect::to('/', array('message' => 'Welcome back' . $player->pname . '!'));
+        }
+    }
+
+    public static function login() {
+        View::make('player/login.html');
+    }
+
     public static function store() {
         $params = $_POST;
 
@@ -33,7 +51,7 @@ class PlayerController extends BaseController {
 
         if (count($errors) == 0) {
             $player->save();
-            Redirect::to('', array('message', 'Player has been added!'));
+            Redirect::to('/', array('message', 'Player has been added!'));
         } else {
             View::make('player/new.html', array(
                 'errors' => $errors,

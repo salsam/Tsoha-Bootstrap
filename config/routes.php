@@ -101,6 +101,14 @@ $routes->post('/player', function() {
     PlayerController::store();
 });
 
+$routes->get('/player/login', function() {
+    PlayerController::login();
+});
+
+$routes->post('/player/login', function() {
+    PlayerController::handle_login();
+});
+
 $routes->get('/player/new', function() {
     PlayerController::create();
 });
@@ -143,21 +151,21 @@ $routes->get('/tournament/:id', function($id) {
 });
 
 $routes->post('/tournament/:id', function($id) {
-TournamentController::update($id);
+    TournamentController::update($id);
 });
 
 $routes->get('/tournament/:id/delete', function($id) {
-TournamentController::delete($id);
+    TournamentController::delete($id);
 });
 
 $routes->post('/tournament/:id/delete', function($id) {
-TournamentController::delete($id);
+    TournamentController::delete($id);
 });
 
 $routes->get('/tournament/:id/edit', function($id) {
-TournamentController::edit($id);
+    TournamentController::edit($id);
 });
 
 $routes->post('/tournament/:id/edit', function($id) {
-TournamentController::edit($id);
+    TournamentController::edit($id);
 });
