@@ -96,6 +96,20 @@ $routes->post('/game/:id/edit', function($id) {
 });
 
 
+#Participation-tauluun liittyvät
+$routes->get('/participation', function() {
+    ParticipationController::index();
+});
+
+$routes->post('/participation', function() {
+    ParticipationController::store();
+});
+
+$routes->post('/participation/:id/delete', function() {
+    ParticipationController::delete($id);
+});
+
+
 #Player-tauluun liittyvät
 $routes->post('/player', function() {
     PlayerController::store();
