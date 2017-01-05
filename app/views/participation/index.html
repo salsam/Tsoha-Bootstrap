@@ -15,18 +15,6 @@
         {% if not participations is empty %}
         {% for participation in participations %}
         <tr>
-            <td>{{game.game_date}}</td>
-            <td>{{game.opponent}}</td>
-            <td>
-                {% if game.game_result=='draw' %}
-                <label class="label label-default">Draw</label>
-                {% elseif game.game_result=='loss' %}
-                <label class="label label-danger">Loss</label>
-                {% else %}
-                <label class="label label-success">Victory</label>
-                {% endif %}
-            </td>
-            <td><a href="{{base_path}}/game/{{game.game_id}}">Link</a></td>
         </tr>
         {% endfor %}
         {% endif %}

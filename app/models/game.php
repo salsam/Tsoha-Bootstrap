@@ -70,12 +70,12 @@ class Game extends BaseModel {
     public function save() {
         $query = DB::connection()->prepare('INSERT INTO Game (player, tournament, '
                 . 'game_date, opponent, game_result, notes, modified) '
-                . 'VALUES (:player, :tournament, :played, :opponent, :result, '
+                . 'VALUES (:player, :tournament, :game_date, :opponent, :result, '
                 . ':notes, :modifie) RETURNING game_id');
         $query->execute(array(
             'player' => $this->player,
             'tournament' => $this->tournament,
-            'played' => $this->game_date,
+            'game_date' => $this->game_date,
             'opponent' => $this->opponent,
             'result' => $this->game_result,
             'notes' => $this->notes,
@@ -88,12 +88,12 @@ class Game extends BaseModel {
     public function update() {
         $query = DB::connection()->prepare('UPDATE Game SET (player, tournament, '
                 . 'game_date, opponent, game_result, notes, modified) '
-                . '=(:player, :tournament, :played, :opponent, :result, '
+                . '=(:player, :tournament, :game_date, :opponent, :result, '
                 . ':notes, :modified) WHERE game_id=:id');
         $query->execute(array(
             'player' => $this->player,
             'tournament' => $this->tournament,
-            'played' => $this->game_date,
+            'game_date' => $this->game_date,
             'opponent' => $this->opponent,
             'result' => $this->game_result,
             'notes' => $this->notes,
