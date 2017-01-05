@@ -6,9 +6,12 @@
 <p>
     {{forms.delete_button("#{base_path}/tournament/#{tourney.tournament_id}/delete")}}
     {{forms.edit_button("#{base_path}/tournament/#{tourney.tournament_id}/edit")}}
-    <a href="{{base_path}}/participation">Join tournament</a>
-    
 </p>
+<form method='post' action="{{base_path}}/participation" style="display: inline-block;">
+    <button type='submit' class='btn btn-default' name="tournament" value="{{tourney.tournament_id}}">
+        Join tournament
+    </button>
+</form>
 
 <ul>
     <li><strong>Name:</strong>{{tourney.tname}}</li>

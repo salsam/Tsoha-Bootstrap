@@ -6,6 +6,7 @@ class Participation extends BaseModel {
 
     public function __construct($attributes) {
         parent::__construct($attributes);
+        $this->validators=array();
     }
 
     public static function allByUser($id) {
@@ -82,7 +83,7 @@ class Participation extends BaseModel {
         $query = DB::connection()->prepare('INSERT INTO Participation '
                 . '(tournament, player, entry_date) VALUES (:tournament, :player, :entry_date)');
         $query->execute(array(
-            'tournament' => $this->entry_date,
+            'tournament' => $this->tournament,
             'player' => $this->player,
             'entry_date' => $this->entry_date));
     }

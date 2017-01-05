@@ -18,8 +18,8 @@ class ParticipationController extends BaseController {
 
     public static function index() {
         $participations = Participation::tournamentsParticipatedIn(self::get_player_logged_in()->player_id);
-        $player=Player::find(self::get_player_logged_in()->player_id);
-        View::make('/participation/index.html', array('participated' => $participations, 'player'=>$player));
+        $player = Player::find(self::get_player_logged_in()->player_id);
+        View::make('/participation/index.html', array('participated' => $participations, 'player' => $player));
     }
 
     public static function store() {
@@ -27,6 +27,7 @@ class ParticipationController extends BaseController {
 
         $attributes = array(
             'tournament' => $params['tournament'],
+            'player' => self::get_player_logged_in()->player_id,
             'entry_date' => date('Y/m/d')
         );
 
@@ -35,7 +36,7 @@ class ParticipationController extends BaseController {
 
         if (count($errors) == 0) {
             $participation->save();
-            Redirect::to('/player/index', array('message' => 'Participation has been added'));
+            Redirect::to('/participation/index', array('message' => 'Participation has been added'));
         } else {
             throw new Exception("Tournament can't be joined");
         }
