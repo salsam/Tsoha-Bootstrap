@@ -24,9 +24,7 @@ class BaseModel {
 // Kutsu validointimetodia tässä ja lisää sen palauttamat virheet errors-taulukkoon
             $add = $this->{$validator}();
 
-            if ($add != NULL and is_array($add)) {
-                $errors = array_merge($errors, $add);
-            }
+            $errors = array_merge($errors, $add);
         }
         return $errors;
     }

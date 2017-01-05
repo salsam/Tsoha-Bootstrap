@@ -11,9 +11,9 @@ class Game extends BaseModel {
             'validate_tournament');
     }
 
-    public static function all() {
+    public static function allPlayedByUser($id) {
         $query = DB::connection()->prepare('SELECT * FROM Game WHERE player=:id');
-        $query->execute(array('id' => BaseController::get_user_logged_in()->player_id));
+        $query->execute(array('id' => $id));
         $rows = $query->fetchAll();
         $games = array();
 

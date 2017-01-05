@@ -35,7 +35,7 @@ class GameController extends BaseController {
     }
 
     public static function history() {
-        $games = Game::all();
+        $games = Game::allPlayedByUser(self::get_player_logged_in()->player_id);
         View::make('game/history.html', array('games' => $games));
     }
 
@@ -43,7 +43,7 @@ class GameController extends BaseController {
         $params = $_POST;
 
         $attributes = array(
-            'player' => BaseController::get_user_logged_in()->player_id,
+            'player' => self::get_player_logged_in()->player_id,
             'tournament' => $params['tournament'],
             'game_date' => $params['game_date'],
             'opponent' => $params['opponent'],
@@ -67,6 +67,7 @@ class GameController extends BaseController {
         $params = $_POST;
 
         $attributes = array(
+            'player' => self::get_player_logged_in()->player_id,
             'game_id' => $id,
             'tournament' => $params['tournament'],
             'game_date' => $params['game_date'],

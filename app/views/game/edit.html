@@ -29,15 +29,27 @@
 
     <div class="radio">
         <label class="label label-success">
+            {% if game.game_result=='victory' %}
             <input name="result" type="radio" value='victory' checked>Victory
+            {% else %}
+            <input name="result" type="radio" value='victory'>Victory
+            {% endif %}
         </label>
         <br>
         <label class="label label-default">
+            {% if game.game_result=='draw' %}
+            <input name="result" type="radio" value='draw' checked>Draw
+            {% else %}
             <input name="result" type="radio" value='draw'>Draw
+            {% endif %}
         </label>
         <br>
         <label class="label label-danger">
+            {% if game.game_result=='loss' %}
+            <input name="result" type="radio" value='loss' checked>Loss
+            {% else %}
             <input name="result" type="radio" value='loss'>Loss
+            {% endif %}
         </label>
     </div>
 

@@ -2,12 +2,12 @@
 
 class ParticipationController extends BaseController {
 
-    public static function delete($id) {
-        $participation = Participation::find($id);
+    public static function delete($tournament) {
+        $participation = Participation::find(self::get_player_logged_in()->player_id, $tournament);
 
         if ($participation) {
             try {
-                Participation::delete($id);
+                Participation::delete(self::get_player_logged_in()->player_id, $tournament);
                 unset($participation);
                 Redirect::to('/participation/index', array($message => 'Participation has been deleted'));
             } catch (Exception $e) {
@@ -17,7 +17,9 @@ class ParticipationController extends BaseController {
     }
 
     public static function index() {
-        View::make('/participation/index.html');
+        $participations = Participation::tournamentsParticipatedIn(self::get_player_logged_in()->player_id);
+        $player=Player::find(self::get_player_logged_in()->player_id);
+        View::make('/participation/index.html', array('participated' => $participations, 'player'=>$player));
     }
 
     public static function store() {
