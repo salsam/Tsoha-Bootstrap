@@ -31,8 +31,8 @@ class Player extends BaseModel {
         $query = DB::connection()->prepare('SELECT * FROM Player '
                 . 'WHERE pname=:name AND password=:pass LIMIT 1');
         $query->execute(array('name' => $username, 'pass' => $password));
-        $row=$query->fetch();
-        
+        $row = $query->fetch();
+
         if ($row) {
             $player = new Player(array(
                 'player_id' => $row['player_id'],
@@ -79,26 +79,26 @@ class Player extends BaseModel {
     public function save() {
         $query = DB::connection()->prepare('INSERT INTO Player (pname, password, email, organizer) '
                 . 'VALUES (:name, :pass, :email, :organizer) RETURNING player_id');
-        $query->execute(array(
-            'name' => $this->pname,
-            'pass' => $this->password,
-            'email' => $this->email,
-            'organizer' => $this->organizer
-        ));
+        $query->bindValue('name', $this->pname, PDO::PARAM_STR);
+        $query->bindValue('pass', $this->password, PDO::PARAM_STR);
+        $query->bindValue('email', $this->email, PDO::PARAM_STR);
+        $query->bindValue('organizer', $this->organizer, PDO::PARAM_BOOL);
+        $query->execute();
+
         $row = $query->fetch();
         $this->player_id = $row['player_id'];
     }
 
     public function validate_name() {
-        return $this->validate_string_length($this->pname, 20);
+        return $this->validate_string_length($this->pname, 20, "Name");
     }
 
     public function validate_password() {
-        return array_merge($this->validate_string_length($this->password, 20), $this->validate_string_min($this->password, 5));
+        return array_merge($this->validate_string_length($this->password, 20, "Password"), $this->validate_string_min($this->password, 5, "Password"));
     }
 
     public function validate_email() {
-        return $this->validate_string_length($this->email, 30);
+        return $this->validate_string_length($this->email, 30, "Email");
     }
 
     public function validate_organizer() {

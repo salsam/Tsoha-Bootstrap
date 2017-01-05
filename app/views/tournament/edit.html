@@ -14,23 +14,25 @@
 
 <form method="post" action="{{base_path}}/tournament/{{tourney.tournament_id}}">
     <div class="form-group">
-        <label>Name</label><br>
-        <input name="name" type="text" value="{{tourney.tname}}" size="20" maxlength="20">
+        <label>Tournament name</label><br>
+        <input name="name" type="text" value="{{tourney.tname}}" size="20" maxlength="20" required>
         <br>
         <label>Start date</label><br>
-        <input name="start" type="date" value="{{tourney.start_date}}">
+        <input name="start" type="date" value="{{tourney.start_date}}" required>
         <br>
         <label>End date</label><br>
-        <input name="end" type="date" value="{{tourney.start_date}}">
+        <input name="end" type="date" value="{{tourney.start_date}}" required>
         <br>
         <label>Game format</label><br>
-        <input name="gameform" type="text" value="{{tourney.game_format}}" size="20" maxlength="20">
+        <input name="gameform" type="text" value="{{tourney.game_format}}" 
+               size="20" maxlength="20" required>
         <br>
         <label>Tournament format</label><br>
-        <input name="tourform" type="text" value="{{tourney.tournament_format}}" size="20" maxlength="20">
+        <input name="tourform" type="text" value="{{tourney.tournament_format}}" 
+               size="20" maxlength="20" required>
         <br>
         <label>Capacity</label><br>
-        <input name="cap" type="number" value="{{tourney.capacity}}">
+        <input name="cap" type="number" value="{{tourney.capacity}}" required>
     </div>
     
     

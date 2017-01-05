@@ -66,10 +66,6 @@ class BaseModel {
     public function validate_string_length($str, $len, $field) {
         $errors = array();
 
-        if ($str == '' || $str == null) {
-            $errors[] = $field . " can't be empty!";
-        }
-
         if (strlen($str) > $len) {
             $errors[] = $field . " contains too long string. Please choose a string of length "
                     . $len . "or less!";

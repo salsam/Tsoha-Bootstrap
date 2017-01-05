@@ -10,7 +10,7 @@ CREATE TABLE Player(
 
 CREATE TABLE Tournament(
   tournament_id SERIAL PRIMARY KEY,
-  organizer INTEGER REFERENCES Player(player_id),
+  organizer INTEGER REFERENCES Player(player_id) NOT NULL,
   tname varchar(20) UNIQUE NOT NULL,
   start_date DATE NOT NULL,
   end_date DATE NOT NULL,
@@ -23,15 +23,15 @@ CREATE TABLE Tournament(
 );
 
 CREATE TABLE Participation(
-  player INTEGER REFERENCES Player(player_id),
-  tournament INTEGER REFERENCES Tournament(tournament_id),
+  player INTEGER REFERENCES Player(player_id) NOT NULL,
+  tournament INTEGER REFERENCES Tournament(tournament_id) NOT NULL,
   entry_date DATE NOT NULL,
   PRIMARY KEY(player,tournament)
 );
 
 CREATE TABLE Game(
   game_id SERIAL PRIMARY KEY,
-  player INTEGER REFERENCES Player(player_id),
+  player INTEGER REFERENCES Player(player_id) NOT NULL,
   tournament INTEGER REFERENCES Tournament(tournament_id),
   game_date DATE NOT NULL,
   opponent varchar(20),

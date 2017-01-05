@@ -54,7 +54,13 @@
 
         <div id="main-container">
             <!-- Dynaaminen sisältö tulee tähän -->
-            {% block content %}{% endblock %}
+            {% if message %}
+            <div class="alert alert-info">
+                {{message}}
+            </div>
+            {% endif %}
+            {% block content %}
+            {% endblock %}
         </div>
 
         {% block body %}

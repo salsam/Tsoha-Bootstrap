@@ -3,10 +3,12 @@
 class TournamentController extends BaseController {
 
     public static function create() {
+        self::check_logged_in();
         View::make('/tournament/new.html');
     }
 
     public static function delete($id) {
+        self::check_logged_in();
         $tourney = Tournament::find($id);
         if ($tourney != NULL) {
             $tourney->delete();
@@ -18,6 +20,7 @@ class TournamentController extends BaseController {
     }
 
     public static function details($id) {
+        self::check_logged_in();
         $tourney = Tournament::find($id);
         if ($tourney != NULL) {
             View::make('/tournament/details.html', array('tourney' => $tourney));
@@ -27,6 +30,7 @@ class TournamentController extends BaseController {
     }
 
     public static function edit($id) {
+        self::check_logged_in();
         $tourney = Tournament::find($id);
         if ($tourney != NULL) {
             View::make('tournament/edit.html', array('tourney' => $tourney));
@@ -36,11 +40,13 @@ class TournamentController extends BaseController {
     }
 
     public static function index() {
+        self::check_logged_in();
         $tourneys = Tournament::all();
         View::make('tournament/index.html', array('tourneys' => $tourneys));
     }
 
     public static function store() {
+        self::check_logged_in();
         $params = $_POST;
 
         $attributes = array(
@@ -69,6 +75,7 @@ class TournamentController extends BaseController {
     }
 
     public static function update($id) {
+        self::check_logged_in();
         $params = $_POST;
 
         $attributes = array(

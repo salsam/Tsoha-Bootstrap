@@ -8,7 +8,7 @@ class Game extends BaseModel {
     public function __construct($attributes) {
         parent::__construct($attributes);
         $this->validators = array('validate_game_date', 'validate_opponent',
-            'validate_tournament');
+            'validate_tournament', 'validate_result');
     }
 
     public static function allPlayedByUser($id) {
@@ -116,6 +116,16 @@ class Game extends BaseModel {
 
     public function validate_tournament() {
         return $this->validate_number($this->tournament, "Tournament");
+    }
+
+    public function validate_result() {
+        $errors = array();
+
+        if ($this->game_result != 'victory' && $this->game_result != 'draw' && $this->game_result != 'loss') {
+            $errors[] = 'Result must be victory, draw or loss!';
+        }
+
+        return $errors;
     }
 
 }

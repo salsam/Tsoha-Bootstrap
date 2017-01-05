@@ -19,25 +19,25 @@
         <br>
         <label>Tournament name</label><br>
         <input name="name" type="text" value="{{attributes.tname}}" size="20"
-               maxlength="20">
+               maxlength="20" required>
         <br>
         <label>Start date</label> <br>
-        <input name="start" type="date" value="{{attributes.start_date}}">
+        <input name="start" type="date" value="{{attributes.start_date}}" required>
         <br>
         <label>End date</label>
         <br>
-        <input name="end" type="date" value="{{attributes.end_date}}">
+        <input name="end" type="date" value="{{attributes.end_date}}" required>
         <br>
         <label>Game format</label><br>
         <input name="gameform" type="text" value="{{attributes.game_format}}" 
-               size="20" maxlength="20">
+               size="20" maxlength="20" required>
         <br>
         <label>Tournament format</label><br>
         <input name="tourform" type="text" value="{{attributes.tournament_format}}" 
-               size="20" maxlength="20">
+               size="20" maxlength="20" required>
         <br>
         <label>Capacity</label><br>
-        <input name="cap" type="number" value="{{attributes.capacity}}">
+        <input name="cap" type="number" value="{{attributes.capacity}}" required>
     </div>
 
     <div class="form-group">

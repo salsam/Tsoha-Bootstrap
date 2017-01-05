@@ -112,7 +112,7 @@ $routes->post('/participation/:id/delete', function() {
 
 #Player-tauluun liittyvät
 $routes->post('/player', function() {
-    PlayerController::store();
+    PlayerController::storePlayer();
 });
 
 $routes->get('/player/login', function() {

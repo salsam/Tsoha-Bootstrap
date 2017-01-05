@@ -7,6 +7,7 @@ class PlayerController extends BaseController {
     }
 
     public static function delete($id) {
+        self::check_logged_in();
         $player = Player::find($id);
 
         if ($player != null) {
@@ -28,7 +29,7 @@ class PlayerController extends BaseController {
                 , 'username' => $params['username']));
         } else {
             $_SESSION['player'] = $player->player_id;
-            Redirect::to('/', array('message' => 'Welcome back' . $player->pname . '!'));
+            Redirect::to('/', array('message' => 'Welcome back ' . $player->pname . '!'));
         }
     }
 
@@ -36,14 +37,14 @@ class PlayerController extends BaseController {
         View::make('player/login.html');
     }
 
-    public static function store() {
+    public static function storePlayer() {
         $params = $_POST;
 
         $attributes = array(
             'pname' => $params['pname'],
             'password' => $params['pword'],
             'email' => $params['email'],
-            'organizer' => FALSE
+            'organizer' => False
         );
 
         $player = new Player($attributes);
