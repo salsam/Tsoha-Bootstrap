@@ -24,7 +24,8 @@ class GameController extends BaseController {
         self::check_logged_in();
         $game = Game::find($id);
         if ($game != NULL) {
-            View::make('game/details.html', array('game' => $game));
+            $tournament = Tournament::find($game->tournament);
+            View::make('game/details.html', array('game' => $game, 'tournament' => $tournament));
         } else {
             throw new Exception($message = 'Game not found');
         }
@@ -49,26 +50,27 @@ class GameController extends BaseController {
         View::make('game/history.html', array('games' => $games));
     }
 
-    public static function store() {
-        self::check_logged_in();
-        $params = $_POST;
-
-        $result = null;
-
-        if (in_array('result', $params)) {
-            $result = $params['result'];
-        }
-
-        $attributes = array(
+    private static function setAttributes($params) {
+        return array(
             'player' => self::get_player_logged_in()->player_id,
             'tournament' => $params['tournament'],
             'game_date' => $params['game_date'],
             'opponent' => $params['opponent'],
-            'game_result' => $result,
+            'game_result' => $params['result'],
             'notes' => $params['notes'],
             'modified' => date('Y/m/d')
         );
+    }
 
+    public static function store() {
+        self::check_logged_in();
+        $params = $_POST;
+
+        if (!array_key_exists('result', $params)) {
+            $params['result'] = 'not set';
+        }
+
+        $attributes = self::setAttributes($params);
         $game = new Game($attributes);
         $errors = $game->errors();
 

@@ -16,7 +16,7 @@
         <label>Tournament</label>
         <br>
         <select class="form-control" name="tournament">
-            <option></option>
+            <option value="0"></option>
             {% for tourney in participations %}
             <option value="{{tourney.tournament_id}}">{{tourney.tname}}</option>
             {% endfor %}
@@ -33,29 +33,40 @@
     </div>
 
     <div class="radio">
+
+        {% if game.game_result=='victory' %}
         <label class="label label-success">
-            {% if game.game_result=='victory' %}
             <input name="result" type="radio" value='victory' checked>Victory
-            {% else %}
+        </label>
+        {% else %}
+        <label class="label label-success">
             <input name="result" type="radio" value='victory'>Victory
-            {% endif %}
         </label>
+        {% endif %}
         <br>
+
+        {% if game.game_result=='draw' %}
         <label class="label label-default">
-            {% if game.game_result=='draw' %}
             <input name="result" type="radio" value='draw' checked>Draw
-            {% else %}
+        </label>
+        {% else %}
+        <label class="label label-default">
             <input name="result" type="radio" value='draw'>Draw
-            {% endif %}
         </label>
+        {% endif %}
+
         <br>
+
+        {% if game.game_result=='loss' %}
         <label class="label label-danger">
-            {% if game.game_result=='loss' %}
             <input name="result" type="radio" value='loss' checked>Loss
-            {% else %}
-            <input name="result" type="radio" value='loss'>Loss
-            {% endif %}
         </label>
+        {% else %}
+        <label class="label label-danger">
+            <input name="result" type="radio" value='loss'>Loss
+        </label>
+        {% endif %}
+
     </div>
 
     <div class="form-group">

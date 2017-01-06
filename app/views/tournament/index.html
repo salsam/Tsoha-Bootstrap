@@ -18,12 +18,14 @@
     <tbody>
         {% if not tourneys is empty %}
         {% for tourney in tourneys %}
+        {% if tourney.tournament_id!=0 %}
         <tr>
             <td>{{tourney.tname}}</td>
             <td>{{tourney.start_date}}</td>
             <td>{{tourney.organizer}}</td>
             <td><a href="{{base_path}}/tournament/{{tourney.tournament_id}}">Link</a></td>
         </tr>
+        {% endif %}
         {% endfor %}
         {% endif %}
     </tbody>
