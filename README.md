@@ -19,9 +19,11 @@ Staattiset sivut:
 * [Organizer registration](http://samisalo.users.cs.helsinki.fi/ChessDatabase/organizer_register)
 
 Dynaamiset sivut:
-* [Game list](http://samisalo.users.cs.helsinki.fi/ChessDatabase/game)
-* [Tournament list](http://samisalo.users.cs.helsinki.fi/ChessDatabase/tournament)
+* [Login](https://samisalo.users.cs.helsinki.fi/ChessDatabase/player/login)
+* [Game list](https://samisalo.users.cs.helsinki.fi/ChessDatabase/game)
+* [Tournament list](https://samisalo.users.cs.helsinki.fi/ChessDatabase/tournament)
 
+#####Huom. käyttäjänimi a ja salasana a.
 
 ## Työn aihe
 
