@@ -16,7 +16,12 @@
     <div class="form-group">
         <label>Tournament</label>
         <br>
-        <input name="tournament" type="number" value="{{game.tournament}}" required>
+        <select name="tournament">
+            <option value=""></option>
+            {% for tourney in participations %}
+            <option value="{{tourney.tournament_id}}">{{tourney.name}}</option>
+            {% endfor %}
+        </select>
         <br>
         <label>Date</label>
         <br>

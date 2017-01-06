@@ -27,19 +27,7 @@ class Tournament extends BaseModel {
 
         if (!empty($rows)) {
             foreach ($rows as $row) {
-                $tourneys[] = new Tournament(array(
-                    'tournament_id' => $row['tournament_id'],
-                    'organizer' => $row['organizer'],
-                    'tname' => $row['tname'],
-                    'start_date' => $row['start_date'],
-                    'end_date' => $row['end_date'],
-                    'game_format' => $row['game_format'],
-                    'tournament_format' => $row['tournament_format'],
-                    'participants' => $row['participants'],
-                    'capacity' => $row['capacity'],
-                    'details' => $row['details'],
-                    'modified' => $row['modified']
-                ));
+                $tourneys[] = self::tournamentFromRow($row);
             }
         }
 
@@ -50,7 +38,6 @@ class Tournament extends BaseModel {
         try {
             $query = DB::connection()->prepare('DELETE FROM Tournament WHERE tournament_id=:id');
             $query->execute(array('id' => $this->tournament_id));
-            echo 'Tournament deleted successfully';
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
@@ -63,19 +50,7 @@ class Tournament extends BaseModel {
         $row = $query->fetch();
 
         if ($row) {
-            $tourney = new Tournament(array(
-                'tournament_id' => $row['tournament_id'],
-                'organizer' => $row['organizer'],
-                'tname' => $row['tname'],
-                'start_date' => $row['start_date'],
-                'end_date' => $row['end_date'],
-                'game_format' => $row['game_format'],
-                'tournament_format' => $row['tournament_format'],
-                'participants' => $row['participants'],
-                'capacity' => $row['capacity'],
-                'details' => $row['details'],
-                'modified' => $row['modified']
-            ));
+            $tourney = self::tournamentFromRow($row);
             return $tourney;
         }
         return null;
@@ -102,6 +77,22 @@ class Tournament extends BaseModel {
 
         $row = $query->fetch();
         $this->tournament_id = $row['tournament_id'];
+    }
+
+    public static function tournamentFromRow($row) {
+        return new Tournament(array(
+            'tournament_id' => $row['tournament_id'],
+            'organizer' => $row['organizer'],
+            'tname' => $row['tname'],
+            'start_date' => $row['start_date'],
+            'end_date' => $row['end_date'],
+            'game_format' => $row['game_format'],
+            'tournament_format' => $row['tournament_format'],
+            'participants' => $row['participants'],
+            'capacity' => $row['capacity'],
+            'details' => $row['details'],
+            'modified' => $row['modified']
+        ));
     }
 
     public function update() {
@@ -137,8 +128,9 @@ class Tournament extends BaseModel {
                 $error[] = "Start date must be smaller or equal than end date";
             }
         }
+        return $errors;
     }
-    
+
     public function validate_capacity() {
         return $this->validate_number($this->capacity, "Capacity");
     }

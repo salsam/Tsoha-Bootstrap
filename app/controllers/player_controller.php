@@ -37,6 +37,11 @@ class PlayerController extends BaseController {
         View::make('player/login.html');
     }
 
+    public static function logout() {
+        $_SESSION['player'] = null;
+        Redirect::to('/', array('message' => 'You have been successfully logged out! Have a nice day!'));
+    }
+
     public static function storePlayer() {
         $params = $_POST;
 

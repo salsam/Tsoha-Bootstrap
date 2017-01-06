@@ -39,7 +39,6 @@ class Game extends BaseModel {
         try {
             $query = DB::connection()->prepare('DELETE FROM Game WHERE game_id=:id');
             $query->execute(array('id' => $this->game_id));
-            echo 'Game deleted successfully!';
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
@@ -115,14 +114,17 @@ class Game extends BaseModel {
     }
 
     public function validate_tournament() {
-        return $this->validate_number($this->tournament, "Tournament");
+        if ($this->tournament) {
+            return $this->validate_number($this->tournament, "Tournament");
+        }
+        return array();
     }
 
     public function validate_result() {
         $errors = array();
 
         if ($this->game_result != 'victory' && $this->game_result != 'draw' && $this->game_result != 'loss') {
-            $errors[] = 'Result must be victory, draw or loss!';
+            $errors[] = 'Result must be victory, draw or loss! Was ' . $this->game_result;
         }
 
         return $errors;

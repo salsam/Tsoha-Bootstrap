@@ -16,7 +16,7 @@
         <label class="label label-default">Draw</label>
         {% elseif game.game_result=='loss'%}
         <label class="label label-danger">Loss</label>
-        {% else %}
+        {% elseif game.game_result=='victory' %}
         <label class="label label-success">Victory</label>
         {% endif %}
     </li>

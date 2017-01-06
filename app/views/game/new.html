@@ -15,8 +15,14 @@
     <div class="form-group">
         <label>Tournament</label>
         <br>
-        <input name="tournament" type="number" value="{{game.tournament}}" required>
-        <br>
+        <select class="form-control" name="tournament">
+            <option></option>
+            {% for tourney in participations %}
+            <option value="{{tourney.tournament_id}}">{{tourney.tname}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
         <label>Date</label>
         <br>
         <input name="game_date" type="date" value="{{game.game_date}}" required>

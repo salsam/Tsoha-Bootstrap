@@ -8,13 +8,6 @@ class HelloWorldController extends BaseController {
     }
 
     public static function sandbox() {
-        $game=new Game(array(
-            'player'=>'a',
-           'played'=>'2017-1-1',
-            'opponent'=>'ababababababaabbaabababababababababab'
-        ));
-        $errors=$game->errors();
-        Kint::dump($errors);
     }
 
     public static function game_add() {

@@ -12,7 +12,6 @@ class TournamentController extends BaseController {
         $tourney = Tournament::find($id);
         if ($tourney != NULL) {
             $tourney->delete();
-            unset($tourney);
             Redirect::to("/tournament", array('message' => "Tournament deleted"));
         } else {
             throw new Exception($message = 'Tournament not found');
@@ -23,7 +22,11 @@ class TournamentController extends BaseController {
         self::check_logged_in();
         $tourney = Tournament::find($id);
         if ($tourney != NULL) {
-            View::make('/tournament/details.html', array('tourney' => $tourney));
+            View::make('/tournament/details.html', array(
+                'tourney' => $tourney,
+                'participation' =>
+                Participation::find(self::get_player_logged_in()->player_id, $id))
+            );
         } else {
             throw new Exception($message = 'Tournament not found!');
         }
@@ -49,8 +52,23 @@ class TournamentController extends BaseController {
         self::check_logged_in();
         $params = $_POST;
 
-        $attributes = array(
-            'organizer' => intval($params['org']),
+        $attributes = self::argumentsForTourney($params);
+        $tourney = new Tournament($attributes);
+        $errors = $tourney->errors();
+
+
+        if (count($errors) > 0) {
+            Redirect::to('/tournament/new', array('errors' => $errors, 'attributes' => $attributes));
+        } else {
+            $tourney->save();
+            Redirect::to('/tournament/' . $tourney->tournament_id, array('message' => 'Tournament has been added.'));
+        }
+    }
+
+    private static function argumentsForTourney($params) {
+
+        return array(
+            'organizer' => BaseController::get_player_logged_in()->player_id,
             'tname' => $params['name'],
             'start_date' => $params['start'],
             'end_date' => $params['end'],
@@ -61,24 +79,10 @@ class TournamentController extends BaseController {
             'details' => $params['details'],
             'modified' => date('Y/m/d')
         );
-
-        $tourney = new Tournament($attributes);
-        $errors = $tourney->errors();
-
-
-        if (count($errors) > 0) {
-            Redirect::to('tournament/new', array('errors' => $errors, 'attributes' => $attributes));
-        } else {
-            $tourney->save();
-            Redirect::to('/tournament/' . $tourney->tournament_id, array('message' => 'Tournament has been added.'));
-        }
     }
 
-    public static function update($id) {
-        self::check_logged_in();
-        $params = $_POST;
-
-        $attributes = array(
+    private static function updatedArguments($params) {
+        return array(
             'tournament_id' => $id,
             'tname' => $params['name'],
             'start_date' => $params['start'],
@@ -89,7 +93,13 @@ class TournamentController extends BaseController {
             'details' => $params['details'],
             'modified' => date('Y/m/d')
         );
+    }
 
+    public static function update($id) {
+        self::check_logged_in();
+        $params = $_POST;
+
+        $attributes = self::updatedArguments($params);
         $tourney = new Tournament($attributes);
         $errors = $tourney->errors();
 

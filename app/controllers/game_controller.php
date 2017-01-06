@@ -4,10 +4,13 @@ class GameController extends BaseController {
 
     public static function create() {
         self::check_logged_in();
-        View::make('game/new.html');
+        View::make('game/new.html', array(
+            'participations' =>
+            Participation::participations(self::get_player_logged_in()->player_id)));
     }
 
     public static function delete($id) {
+        self::check_logged_in();
         $game = Game::find($id);
         if ($game != NULL) {
             $game->delete();
@@ -31,7 +34,10 @@ class GameController extends BaseController {
         self::check_logged_in();
         $game = Game::find($id);
         if ($game != NULL) {
-            View::make('game/edit.html', array('game' => $game));
+            View::make('game/edit.html', array(
+                'game' => $game,
+                'participations' =>
+                Participation::participations(self::get_player_logged_in()->player_id)));
         } else {
             throw new Exception($message = 'Game not found');
         }
@@ -70,7 +76,9 @@ class GameController extends BaseController {
             $game->save();
             Redirect::to('/game/' . $game->game_id, array('message' => 'Game has been added'));
         } else {
-            View::make('game/new.html', array('errors' => $errors, 'game' => $attributes));
+            View::make('game/new.html', array('errors' => $errors, 'game' => $attributes,
+                'participations' =>
+                Participation::participations(self::get_player_logged_in()->player_id)));
         }
     }
 
@@ -95,7 +103,9 @@ class GameController extends BaseController {
             $game->update();
             Redirect::to('/game/' . $game->game_id, array('message' => 'Game has been edited!'));
         } else {
-            View::make('game/edit.html', array('errors' => $errors, 'game' => $game));
+            View::make('game/edit.html', array('errors' => $errors, 'game' => $game,
+                'participations' =>
+                Participation::participations(self::get_player_logged_in()->player_id)));
         }
     }
 
