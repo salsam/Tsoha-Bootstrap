@@ -13,10 +13,14 @@ class GameController extends BaseController {
         self::check_logged_in();
         $game = Game::find($id);
         if ($game != NULL) {
-            $game->delete();
-            Redirect::to('/game', array('message' => 'Game has been deleted'));
+            if (BaseController::get_player_logged_in()->player_id == $game->player) {
+                $game->delete();
+                Redirect::to('/game', array('message' => 'Game has been deleted'));
+            } else {
+                Redirect::to('/', array('message' => 'You can only delete your own games'));
+            }
         } else {
-            throw new Exception($message = 'Game not found!');
+            Redirect::to('/game', array('message' => 'Game not found!'));
         }
     }
 
@@ -24,10 +28,14 @@ class GameController extends BaseController {
         self::check_logged_in();
         $game = Game::find($id);
         if ($game != NULL) {
-            $tournament = Tournament::find($game->tournament);
-            View::make('game/details.html', array('game' => $game, 'tournament' => $tournament));
+            if (BaseController::get_player_logged_in()->player_id == $game->player) {
+                $tournament = Tournament::find($game->tournament);
+                View::make('game/details.html', array('game' => $game, 'tournament' => $tournament));
+            } else {
+                Redirect::to('/game', array('message' => 'You can only watch your own game data!'));
+            }
         } else {
-            throw new Exception($message = 'Game not found');
+            Redirect::to('/game', array('message' => 'Game not found!'));
         }
     }
 
@@ -35,12 +43,16 @@ class GameController extends BaseController {
         self::check_logged_in();
         $game = Game::find($id);
         if ($game != NULL) {
-            View::make('game/edit.html', array(
-                'game' => $game,
-                'participations' =>
-                Participation::participations(self::get_player_logged_in()->player_id)));
+            if (BaseController::get_player_logged_in()->player_id == $game->player) {
+                View::make('game/edit.html', array(
+                    'game' => $game,
+                    'participations' =>
+                    Participation::participations(self::get_player_logged_in()->player_id)));
+            } else {
+                Redirect::to('/game', array('message' => 'You can only edit your own games!'));
+            }
         } else {
-            throw new Exception($message = 'Game not found');
+            Redirect::to('/game', array('message' => 'Game not found!'));
         }
     }
 
@@ -86,8 +98,22 @@ class GameController extends BaseController {
 
     public static function update($id) {
         $params = $_POST;
+        $attributes = self::updateAttributes($params, $id);
+        $game = new Game($attributes);
+        $errors = $game->errors();
 
-        $attributes = array(
+        if (count($errors) == 0) {
+            $game->update();
+            Redirect::to('/game/' . $game->game_id, array('message' => 'Game has been edited!'));
+        } else {
+            View::make('game/edit.html', array('errors' => $errors, 'game' => $attributes,
+                'participations' =>
+                Participation::participations(self::get_player_logged_in()->player_id)));
+        }
+    }
+
+    private static function updateAttributes($params, $id) {
+        return array(
             'player' => self::get_player_logged_in()->player_id,
             'game_id' => $id,
             'tournament' => $params['tournament'],
@@ -97,18 +123,6 @@ class GameController extends BaseController {
             'notes' => $params['notes'],
             'modified' => date('Y/m/d')
         );
-
-        $game = new Game($attributes);
-        $errors = $game->errors();
-
-        if (count($errors) == 0) {
-            $game->update();
-            Redirect::to('/game/' . $game->game_id, array('message' => 'Game has been edited!'));
-        } else {
-            View::make('game/edit.html', array('errors' => $errors, 'game' => $game,
-                'participations' =>
-                Participation::participations(self::get_player_logged_in()->player_id)));
-        }
     }
 
 }

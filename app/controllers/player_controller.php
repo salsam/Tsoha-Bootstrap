@@ -11,11 +11,14 @@ class PlayerController extends BaseController {
         $player = Player::find($id);
 
         if ($player != null) {
-            $player->delete();
-            unset($player);
-            Redirect::to('/player', array('message' => 'Player has been deleted'));
+            if (BaseController::get_player_logged_in()->player_id == $id) {
+                $player->delete();
+                Redirect::to('/', array('message' => 'Player has been deleted'));
+            } else {
+                Redirect::to('/', array('message' => "You are only allowed to delete you own profile!"));
+            }
         } else {
-            throw new Exception(array('message' => 'Player not found'));
+            Redirect::to('/', array('message' => 'Player not found!'));
         }
     }
 
