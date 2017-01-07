@@ -16,6 +16,11 @@ class ParticipationController extends BaseController {
         }
     }
 
+    public static function deleteAllParticipations($tournament) {
+        self::check_logged_in();
+        Participation::deleteAllParticipations($tournament);
+    }
+
     public static function index() {
         self::check_logged_in();
         $participations = Participation::participations(self::get_player_logged_in()->player_id);

@@ -70,7 +70,7 @@ $routes->post('/player/login', function() {
     PlayerController::handle_login();
 });
 
-$routes->post('/player/logout', function() {
+$routes->get('/player/logout', function() {
     PlayerController::logout();
 });
 

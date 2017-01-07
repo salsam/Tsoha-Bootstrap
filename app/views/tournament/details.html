@@ -6,8 +6,8 @@
 <p>
     {% if player_logged_in.player_id==tourney.organizer %}
     {{forms.delete_button("#{base_path}/tournament/#{tourney.tournament_id}/delete")}}
-    {% endif %}
     {{forms.edit_button("#{base_path}/tournament/#{tourney.tournament_id}/edit")}}
+    {% endif %}
     {% if participation %}
 <form method='post' action="{{base_path}}/participation/{{tourney.tournament_id}}/delete" style="display: inline-block;">
     <button type='submit' class='btn btn-default' name="tournament">

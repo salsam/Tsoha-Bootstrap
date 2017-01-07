@@ -11,10 +11,15 @@ class TournamentController extends BaseController {
         self::check_logged_in();
         $tourney = Tournament::find($id);
         if ($tourney != NULL) {
-            $tourney->delete();
-            Redirect::to("/tournament", array('message' => "Tournament deleted"));
+            if (BaseController::get_player_logged_in()->player_id == $tourney->organizer) {
+                Participation::deleteAllParticipations($tourney->tournament_id);
+                $tourney->delete();
+                Redirect::to("/tournament", array('message' => "Tournament deleted"));
+            } else {
+                Redirect::to("/tournament", array('message' => "Only organizer can remove this tournament!"));
+            }
         } else {
-            throw new Exception($message = 'Tournament not found');
+            Redirect::to('/tournament', array('message' => 'Tournament not found'));
         }
     }
 
@@ -29,7 +34,7 @@ class TournamentController extends BaseController {
                 Participation::find(self::get_player_logged_in()->player_id, $id))
             );
         } else {
-            throw new Exception($message = 'Tournament not found!');
+            Redirect::to('/tournament', array('message' => 'Tournament not found!'));
         }
     }
 
@@ -37,9 +42,13 @@ class TournamentController extends BaseController {
         self::check_logged_in();
         $tourney = Tournament::find($id);
         if ($tourney != NULL) {
-            View::make('tournament/edit.html', array('tourney' => $tourney));
+            if (BaseController::get_player_logged_in()->player_id == $tourney->organizer) {
+                View::make('tournament/edit.html', array('tourney' => $tourney));
+            } else {
+                Redirect::to('/tournament', array('message' => "Only tournament's organizer can edit it."));
+            }
         } else {
-            throw new Exception($message = 'Tournament not found!');
+            Redirect::to('/tournament', array('message' => 'Tournament not found!'));
         }
     }
 

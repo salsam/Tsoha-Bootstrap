@@ -34,6 +34,12 @@ class Participation extends BaseModel {
         $query->execute(array('player' => $player, 'tournament' => $tournament));
     }
 
+    public static function deleteAllParticipations($tournament) {
+        $query = DB::connection()->prepare('DELETE FROM Participation WHERE '
+                . 'tournament=:tournament');
+        $query->execute(array('tournament' => $tournament));
+    }
+
     public static function find($player, $tournament) {
         $query = DB::connection()->prepare('SELECT * FROM Participation WHERE '
                 . 'player=:player AND tournament=:tournament LIMIT 1');
