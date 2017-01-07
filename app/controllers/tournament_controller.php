@@ -24,6 +24,7 @@ class TournamentController extends BaseController {
         if ($tourney != NULL) {
             View::make('/tournament/details.html', array(
                 'tourney' => $tourney,
+                'org' => Player::find($tourney->organizer),
                 'participation' =>
                 Participation::find(self::get_player_logged_in()->player_id, $id))
             );

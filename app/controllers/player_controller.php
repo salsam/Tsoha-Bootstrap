@@ -42,6 +42,17 @@ class PlayerController extends BaseController {
         Redirect::to('/', array('message' => 'You have been successfully logged out! Have a nice day!'));
     }
 
+    public static function show($id) {
+        self::check_logged_in();
+        $player = Player::find($id);
+
+        if ($player) {
+            View::make('player/profile.html', array('player' => $player));
+        } else {
+            Redirect::to('/', array('message' => 'Player not found!'));
+        }
+    }
+
     public static function storePlayer() {
         $params = $_POST;
 

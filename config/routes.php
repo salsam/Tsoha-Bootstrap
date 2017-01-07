@@ -94,6 +94,10 @@ $routes->post('/player/:id/delete', function($id) {
     PlayerController::delete($id);
 });
 
+$routes->get('/player/:id/profile', function($id) {
+    PlayerController::show($id);
+});
+
 #Tournament-tauluun liittyvät
 $routes->get('/tournament', function() {
     TournamentController::index();

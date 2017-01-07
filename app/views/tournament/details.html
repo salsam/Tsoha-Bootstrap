@@ -27,7 +27,9 @@
     <li><strong>Name:</strong>{{tourney.tname}}</li>
     <li><strong>Start date:</strong>{{tourney.start_date}}</li>
     <li><strong>End date:</strong> {{tourney.end_date}}</li>
-    <li><strong>Organizer:</strong>{{tourney.organizer}}</li>
+    <li><strong>Organizer:</strong>
+        <a href='{{base_path}}/player/{{org.player_id}}/profile'>{{org.pname}}</a>
+    </li>
     <li><strong>Game format:</strong>{{tourney.game_format}}</li>
     <li><strong>Tournament format:</strong>{{tourney.tournament_format}}</li>
     <li><strong>Participants:</strong>{{tourney.participants}}</li>
