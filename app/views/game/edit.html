@@ -16,13 +16,15 @@
     <div class="form-group">
         <label>Tournament</label>
         <br>
-        <select name="tournament">
-            <option value=""></option>
+        <select class="form-control" name="tournament" style="width:200px">
+            <option value="0"></option>
             {% for tourney in participations %}
-            <option value="{{tourney.tournament_id}}">{{tourney.name}}</option>
+            <option value="{{tourney.tournament_id}}">{{tourney.tname}}</option>
             {% endfor %}
         </select>
-        <br>
+    </div>
+
+    <div class="form-group">
         <label>Date</label>
         <br>
         <input name="game_date" type="date" value="{{game.game_date}}" required>
@@ -33,36 +35,48 @@
     </div>
 
     <div class="radio">
+
+        {% if game.game_result=='victory' %}
         <label class="label label-success">
-            {% if game.game_result=='victory' %}
             <input name="result" type="radio" value='victory' checked>Victory
-            {% else %}
+        </label>
+        {% else %}
+        <label class="label label-success">
             <input name="result" type="radio" value='victory'>Victory
-            {% endif %}
         </label>
+        {% endif %}
         <br>
+
+        {% if game.game_result=='draw' %}
         <label class="label label-default">
-            {% if game.game_result=='draw' %}
             <input name="result" type="radio" value='draw' checked>Draw
-            {% else %}
+        </label>
+        {% else %}
+        <label class="label label-default">
             <input name="result" type="radio" value='draw'>Draw
-            {% endif %}
         </label>
+        {% endif %}
+
         <br>
+
+        {% if game.game_result=='loss' %}
         <label class="label label-danger">
-            {% if game.game_result=='loss' %}
             <input name="result" type="radio" value='loss' checked>Loss
-            {% else %}
-            <input name="result" type="radio" value='loss'>Loss
-            {% endif %}
         </label>
+        {% else %}
+        <label class="label label-danger">
+            <input name="result" type="radio" value='loss'>Loss
+        </label>
+        {% endif %}
+
     </div>
+
 
     <div class="form-group">
         <label>Notes</label>
         <br>
-        <textarea name="notes" placeholder="{{game.notes}}" cols="100" rows="10" 
-                  maxlength="5000"></textarea>
+        <textarea name="notes" cols="100" rows="10" 
+                  maxlength="5000">{{game.notes}}</textarea>
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Save changes</button>

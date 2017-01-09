@@ -91,7 +91,7 @@ class TournamentController extends BaseController {
         );
     }
 
-    private static function updatedArguments($params) {
+    private static function updatedArguments($params, $id) {
         return array(
             'tournament_id' => $id,
             'tname' => $params['name'],
@@ -109,7 +109,7 @@ class TournamentController extends BaseController {
         self::check_logged_in();
         $params = $_POST;
 
-        $attributes = self::updatedArguments($params);
+        $attributes = self::updatedArguments($params, $id);
         $tourney = new Tournament($attributes);
         $errors = $tourney->errors();
 

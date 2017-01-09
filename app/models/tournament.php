@@ -16,7 +16,8 @@ class Tournament extends BaseModel {
 
     public function __construct($attributes) {
         parent::__construct($attributes);
-        $this->validators = array('validate_start', 'validate_end', 'validate_duration');
+        $this->validators = array('validate_start', 'validate_end', 'validate_duration',
+            'validate_capacity', 'validate_name');
     }
 
     public static function all() {
@@ -47,6 +48,19 @@ class Tournament extends BaseModel {
         $query = DB::connection()->prepare('SELECT * FROM Tournament '
                 . 'WHERE tournament_id=:id LIMIT 1');
         $query->execute(array('id' => $id));
+        $row = $query->fetch();
+
+        if ($row) {
+            $tourney = self::tournamentFromRow($row);
+            return $tourney;
+        }
+        return null;
+    }
+
+    public static function findByName($name) {
+        $query = DB::connection()->prepare('SELECT * FROM Tournament '
+                . 'WHERE tname=:name LIMIT 1');
+        $query->execute(array('name' => $name));
         $row = $query->fetch();
 
         if ($row) {
@@ -100,8 +114,9 @@ class Tournament extends BaseModel {
                 . 'start_date, end_date, game_format, tournament_format, '
                 . 'capacity, details, modified) '
                 . '= (:name, :start, :end, :gameform, :tourform, '
-                . ':cap, :details, :mod)');
+                . ':cap, :details, :mod) WHERE tournament_id=:id');
         $query->execute(array(
+            'id' => $this->tournament_id,
             'name' => $this->tname,
             'start' => $this->start_date,
             'end' => $this->end_date,
@@ -114,25 +129,44 @@ class Tournament extends BaseModel {
     }
 
     public function validate_start() {
-        return $this->validate_future_date($this->start_date, "Tournament start date must not be past!");
+        return $this->validate_future_date($this->start_date, "Tournament start date must be in the future!");
     }
 
     public function validate_end() {
-        return $this->validate_future_date($this->start_date, "Tournament end date must not be past!");
+        return $this->validate_future_date($this->start_date, "Tournament end date must be in the future!");
     }
 
     public function validate_duration() {
         $errors = array();
         if (count($errors) == 0) {
             if (strtotime($this->end_date) < strtotime($this->start_date)) {
-                $error[] = "Start date must be smaller or equal than end date";
+                $errors[] = "Start date must be smaller or equal than end date";
             }
         }
         return $errors;
     }
 
     public function validate_capacity() {
-        return $this->validate_number($this->capacity, "Capacity");
+        $errors = $this->validate_number($this->capacity, "Capacity");
+
+        if ($this->capacity < 2 || $this->capacity > 1000) {
+            $errors[] = 'Capacity must be between 2 and 1000';
+        }
+
+        return $errors;
+    }
+
+    public function validate_name() {
+        $errors = array_merge($this->validate_string_length($this->tname, 20, "Name")
+                , $this->validate_string_min($this->tname, 1, "Name"));
+
+        $match = self::findByName($this->tname);
+        if ($match && $this->tournament_id != $match->tournament_id) {
+            $errors[] = 'Name has been taken. Please try different name!';
+        }
+
+
+        return $errors;
     }
 
 }

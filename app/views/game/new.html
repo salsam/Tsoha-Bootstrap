@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Add a new game</h1>
+
 {% if errors %}
 <div class="alert alert-danger">
     <ul>
@@ -15,7 +16,7 @@
     <div class="form-group">
         <label>Tournament</label>
         <br>
-        <select class="form-control" name="tournament">
+        <select class="form-control" name="tournament" style="width:200px">
             <option value="0"></option>
             {% for tourney in participations %}
             <option value="{{tourney.tournament_id}}">{{tourney.tname}}</option>
@@ -72,8 +73,9 @@
     <div class="form-group">
         <label>Notes</label>
         <br>
-        <textarea name="notes" placeholder="{{game.notes}}" cols="100" rows="10" 
-                  maxlength="5000"></textarea>
+        <textarea name="notes" cols="100" rows="10" maxlength="5000">
+            {{game.notes}}
+        </textarea>
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Submit</button>

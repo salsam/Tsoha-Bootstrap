@@ -32,10 +32,10 @@
                size="20" maxlength="20" required>
         <br>
         <label>Capacity</label><br>
-        <input name="cap" type="number" value="{{tourney.capacity}}" required>
+        <input name="cap" type="number" value="{{tourney.capacity}}" min=2 max=1000 required>
     </div>
-    
-    
+
+
     <div class="form-group">
         <label>Details</label><br>
         <textarea name="details" value="{{tourney.details}}" cols="100" rows="10" maxlength="5000">
