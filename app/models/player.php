@@ -2,7 +2,7 @@
 
 class Player extends BaseModel {
 
-    public $player_id, $pname, $password, $email, $organizer;
+    public $player_id, $pname, $password, $email;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
@@ -20,8 +20,8 @@ class Player extends BaseModel {
                 'player_id' => $row['player_id'],
                 'pname' => $row['pname'],
                 'password' => $row['password'],
-                'email' => $row['email'],
-                'organizer' => $row['organizer']));
+                'email' => $row['email']
+            ));
         }
 
         return $players;
@@ -38,8 +38,7 @@ class Player extends BaseModel {
                 'player_id' => $row['player_id'],
                 'pname' => $row['pname'],
                 'password' => $row['password'],
-                'email' => $row['email'],
-                'organizer' => $row['organizer']
+                'email' => $row['email']
             ));
             return $player;
         } else {
@@ -67,8 +66,7 @@ class Player extends BaseModel {
                 'player_id' => $row['player_id'],
                 'pname' => $row['pname'],
                 'password' => $row['password'],
-                'email' => $row['email'],
-                'organizer' => $row['organizer']
+                'email' => $row['email']
             ));
             return $player;
         }
@@ -77,12 +75,11 @@ class Player extends BaseModel {
     }
 
     public function save() {
-        $query = DB::connection()->prepare('INSERT INTO Player (pname, password, email, organizer) '
-                . 'VALUES (:name, :pass, :email, :organizer) RETURNING player_id');
+        $query = DB::connection()->prepare('INSERT INTO Player (pname, password, email) '
+                . 'VALUES (:name, :pass, :email) RETURNING player_id');
         $query->bindValue('name', $this->pname, PDO::PARAM_STR);
         $query->bindValue('pass', $this->password, PDO::PARAM_STR);
         $query->bindValue('email', $this->email, PDO::PARAM_STR);
-        $query->bindValue('organizer', $this->organizer, PDO::PARAM_BOOL);
         $query->execute();
 
         $row = $query->fetch();
@@ -99,16 +96,6 @@ class Player extends BaseModel {
 
     public function validate_email() {
         return $this->validate_string_length($this->email, 30, "Email");
-    }
-
-    public function validate_organizer() {
-        $errors = array();
-
-        if (!is_bool($this->organizer)) {
-            $errors[] = 'Organizer must be true or false';
-        }
-
-        return $errors;
     }
 
 }

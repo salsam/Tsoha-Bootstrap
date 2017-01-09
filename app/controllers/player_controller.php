@@ -62,8 +62,7 @@ class PlayerController extends BaseController {
         $attributes = array(
             'pname' => $params['pname'],
             'password' => $params['pword'],
-            'email' => $params['email'],
-            'organizer' => False
+            'email' => $params['email']
         );
 
         $player = new Player($attributes);

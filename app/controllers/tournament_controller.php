@@ -87,7 +87,7 @@ class TournamentController extends BaseController {
             'participants' => 0,
             'capacity' => intval($params['cap']),
             'details' => $params['details'],
-            'modified' => date('Y/m/d')
+            'modified' => date('d/m/Y')
         );
     }
 
@@ -101,7 +101,7 @@ class TournamentController extends BaseController {
             'tournament_format' => $params['tourform'],
             'capacity' => intval($params['cap']),
             'details' => $params['details'],
-            'modified' => date('Y/m/d')
+            'modified' => date('d/m/Y')
         );
     }
 
@@ -115,7 +115,8 @@ class TournamentController extends BaseController {
 
         if (count($errors) == 0) {
             $tourney->update();
-            Redirect::to('/tournament/' . $tourney->tournament_id, array('message' => 'Tournament has been edited'));
+            Redirect::to('/tournament/' . $tourney->tournament_id, 
+                    array('message' => 'Tournament has been edited'));
         } else {
             View::make('tournament/edit.html', array('errors' => $errors, 'tourney' => $tourney));
         }

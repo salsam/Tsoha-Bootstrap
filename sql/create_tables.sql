@@ -4,8 +4,7 @@ CREATE TABLE Player(
   player_id SERIAL PRIMARY KEY,
   pname varchar(20) UNIQUE NOT NULL,
   password varchar(20) NOT NULL,
-  email varchar(30) UNIQUE NOT NULL,
-  organizer boolean NOT NULL
+  email varchar(30) UNIQUE NOT NULL
 );
 
 CREATE TABLE Tournament(
