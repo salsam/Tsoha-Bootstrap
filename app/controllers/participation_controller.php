@@ -45,7 +45,7 @@ class ParticipationController extends BaseController {
             $participation->save();
             Redirect::to('/participation', array('message' => 'Participation has been added'));
         } else {
-            throw new Exception("Tournament can't be joined");
+            Redirect::to('/tournament', array('errors' => $errors));
         }
     }
 

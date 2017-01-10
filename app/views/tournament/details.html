@@ -14,13 +14,19 @@
         Remove registration
     </button>
 </form>
-{% else %}
-<form method='post' action="{{base_path}}/participation/add" style="display: inline-block;">
-    <button type='submit' class='btn btn-default' name="tournament" value="{{tourney.tournament_id}}">
-        Join tournament
-    </button>
-</form>
-{% endif %}
+{% elseif tourney.participants < tourney.capacity %}
+    <form method='post' action="{{base_path}}/participation/add" style="display: inline-block;">
+        <button type='submit' class='btn btn-default' name="tournament" value="{{tourney.tournament_id}}">
+            Join tournament
+        </button>
+    </form>
+    {% else %}
+    <form method='post' action="{{base_path}}/participation/add" style="display: inline-block;">
+        <button type='submit' class='btn btn-default' name="tournament" value="{{tourney.tournament_id}}" disabled>
+            Join tournament
+        </button>
+    </form>
+    {% endif %}
 </p>
 
 <ul>

@@ -26,6 +26,7 @@ class TournamentController extends BaseController {
     public static function details($id) {
         self::check_logged_in();
         $tourney = Tournament::find($id);
+
         if ($tourney != NULL) {
             View::make('/tournament/details.html', array(
                 'tourney' => $tourney,
@@ -115,8 +116,7 @@ class TournamentController extends BaseController {
 
         if (count($errors) == 0) {
             $tourney->update();
-            Redirect::to('/tournament/' . $tourney->tournament_id, 
-                    array('message' => 'Tournament has been edited'));
+            Redirect::to('/tournament/' . $tourney->tournament_id, array('message' => 'Tournament has been edited'));
         } else {
             View::make('tournament/edit.html', array('errors' => $errors, 'tourney' => $tourney));
         }

@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
 
+{% if errors %}
+{% for error in errors %}
+{{error}}
+{% endfor %}
+{%endif %}
+
+
+
 <h1>{{player.pname}}'s tournament participations</h1>
 
 <table class="table table-striped table-bordered">

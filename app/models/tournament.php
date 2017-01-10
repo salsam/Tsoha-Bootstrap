@@ -28,7 +28,7 @@ class Tournament extends BaseModel {
 
         if (!empty($rows)) {
             foreach ($rows as $row) {
-                $tourneys[] = self::tournamentFromRow($row);
+                $tourneys[] = self::tournamentFromRow($row, null);
             }
         }
 
@@ -47,7 +47,7 @@ class Tournament extends BaseModel {
     public static function find($id) {
         $query = DB::connection()->prepare('SELECT tournament_id, organizer, '
                 . 'tname,start_date, end_date,game_format, tournament_format,'
-                . 'count(player) AS part, capacity, details, modified '
+                . 'count(player) AS participants, capacity, details, modified '
                 . 'FROM Tournament LEFT JOIN Participation '
                 . 'ON Tournament.tournament_id=Participation.tournament '
                 . 'WHERE tournament_id=:id '
@@ -57,7 +57,7 @@ class Tournament extends BaseModel {
         $row = $query->fetch();
 
         if ($row) {
-            $tourney = self::tournamentFromRow($row);
+            $tourney = self::tournamentFromRow($row, $row['participants']);
             return $tourney;
         }
         return null;
@@ -98,7 +98,7 @@ class Tournament extends BaseModel {
         $this->tournament_id = $row['tournament_id'];
     }
 
-    public static function tournamentFromRow($row) {
+    public static function tournamentFromRow($row, $participants) {
         return new Tournament(array(
             'tournament_id' => $row['tournament_id'],
             'organizer' => $row['organizer'],
@@ -107,6 +107,7 @@ class Tournament extends BaseModel {
             'end_date' => $row['end_date'],
             'game_format' => $row['game_format'],
             'tournament_format' => $row['tournament_format'],
+            'participants' => $participants,
             'capacity' => $row['capacity'],
             'details' => $row['details'],
             'modified' => $row['modified']

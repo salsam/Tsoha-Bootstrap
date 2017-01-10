@@ -6,7 +6,7 @@ class Participation extends BaseModel {
 
     public function __construct($attributes) {
         parent::__construct($attributes);
-        $this->validators = array();
+        $this->validators = array('validate_tourney_not_full');
     }
 
     public static function allByUser($id) {
@@ -66,7 +66,7 @@ class Participation extends BaseModel {
 
         if ($rows) {
             foreach ($rows as $row) {
-                $tourneys[] = Tournament::tournamentFromRow($row);
+                $tourneys[] = Tournament::tournamentFromRow($row, null);
             }
         }
 
@@ -80,6 +80,22 @@ class Participation extends BaseModel {
             'tournament' => $this->tournament,
             'player' => $this->player,
             'entry_date' => $this->entry_date));
+    }
+
+    public function validate_tourney_not_full() {
+        $errors = array();
+
+        $tourney = Tournament::find($this->tournament);
+
+        if ($tourney) {
+            if ($tourney->tournament_id != 0 && $tourney->capacity == $tourney->participants) {
+                $errors[] = "Tournament is full!";
+            }
+        } else {
+            $errors = "Tournament not found!";
+        }
+
+        return $errors;
     }
 
 }
