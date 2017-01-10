@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+{% import "macros/forms.html" as forms %}
 <h1>Add a new game</h1>
 
 {% if errors %}
@@ -19,7 +20,11 @@
         <select class="form-control" name="tournament" style="width:200px">
             <option value="0"></option>
             {% for tourney in participations %}
+            {% if tourney.tournament_id==game.tournament %}
+            <option value="{{tourney.tournament_id}}" selected>{{tourney.tname}}</option>
+            {% else %}
             <option value="{{tourney.tournament_id}}">{{tourney.tname}}</option>
+            {% endif %}
             {% endfor %}
         </select>
     </div>
@@ -34,40 +39,11 @@
     </div>
 
     <div class="radio">
-
-        {% if game.game_result=='victory' %}
-        <label class="label label-success">
-            <input name="result" type="radio" value='victory' checked>Victory
-        </label>
-        {% else %}
-        <label class="label label-success">
-            <input name="result" type="radio" value='victory'>Victory
-        </label>
-        {% endif %}
+        {{forms.victory_button("#{game.game_result}")}}
         <br>
-
-        {% if game.game_result=='draw' %}
-        <label class="label label-default">
-            <input name="result" type="radio" value='draw' checked>Draw
-        </label>
-        {% else %}
-        <label class="label label-default">
-            <input name="result" type="radio" value='draw'>Draw
-        </label>
-        {% endif %}
-
+        {{forms.draw_button("#{game.game_result}")}}
         <br>
-
-        {% if game.game_result=='loss' %}
-        <label class="label label-danger">
-            <input name="result" type="radio" value='loss' checked>Loss
-        </label>
-        {% else %}
-        <label class="label label-danger">
-            <input name="result" type="radio" value='loss'>Loss
-        </label>
-        {% endif %}
-
+        {{forms.loss_button("#{game.game_result}")}}
     </div>
 
     <div class="form-group">

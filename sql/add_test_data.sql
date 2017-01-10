@@ -5,10 +5,10 @@ INSERT INTO Player (player_id, pname, password, email) VALUES (0, 0, 12345645845
 
 --Tournament-taulun testidata
 INSERT INTO Tournament (tname, organizer, start_date, end_date, game_format, tournament_format,
-participants, capacity, modified) VALUES ('t', 1,'2017-12-12','2017-12-24', 
-'gf', 'tf', 1, 2, NOW());
+capacity, modified) VALUES ('t', 1,'2017-12-12','2017-12-24', 
+'gf', 'tf', 2, NOW());
 INSERT INTO Tournament (tournament_id, tname, organizer, start_date, end_date, game_format, tournament_format,
-participants, capacity, modified) VALUES (0, 'no tournament', 0, '1-1-1', '1-1-1', '', '', 0, 0, '1-1-1');
+capacity, modified) VALUES (0, 'no tournament', 0, '1-1-1', '1-1-1', '', '', 0, '1-1-1');
 
 --Game-taulun testidata
 INSERT INTO Game (player, tournament, game_date, opponent, game_result, modified) 

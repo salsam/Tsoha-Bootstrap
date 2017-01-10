@@ -9,3 +9,39 @@
     <button type='submit' class='btn btn-default'>{{text|default('Edit')}}</button>
 </form>
 {% endmacro %}
+
+{% macro victory_button(result) %}
+{% if result=="victory" %}
+<label class="label label-success">
+    <input name="result" type="radio" value='victory' checked>Victory
+</label>
+{% else %}
+<label class="label label-success">
+    <input name="result" type="radio" value='victory'>Victory
+</label>
+{% endif %}
+{% endmacro %}
+
+{% macro draw_button(result) %}
+{% if result=="draw" %}
+<label class="label label-default">
+    <input name="result" type="radio" value='draw' checked>Draw
+</label>
+{% else %}
+<label class="label label-default">
+    <input name="result" type="radio" value='draw'>Draw
+</label>
+{% endif %}
+{% endmacro %}
+
+{% macro loss_button(result) %}
+{% if result=="loss" %}
+<label class="label label-danger">
+    <input name="result" type="radio" value='loss' checked>Loss
+</label>
+{% else %}
+<label class="label label-danger">
+    <input name="result" type="radio" value='loss'>Loss
+</label>
+{% endif %}
+{% endmacro %}

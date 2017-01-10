@@ -35,7 +35,7 @@ class ParticipationController extends BaseController {
         $attributes = array(
             'tournament' => $params['tournament'],
             'player' => self::get_player_logged_in()->player_id,
-            'entry_date' => date('Y/m/d')
+            'entry_date' => date('d/m/Y')
         );
 
         $participation = new Participation($attributes);

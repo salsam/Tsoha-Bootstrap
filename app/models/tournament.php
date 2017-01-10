@@ -45,8 +45,14 @@ class Tournament extends BaseModel {
     }
 
     public static function find($id) {
-        $query = DB::connection()->prepare('SELECT * FROM Tournament '
-                . 'WHERE tournament_id=:id LIMIT 1');
+        $query = DB::connection()->prepare('SELECT tournament_id, organizer, '
+                . 'tname,start_date, end_date,game_format, tournament_format,'
+                . 'count(player) AS part, capacity, details, modified '
+                . 'FROM Tournament LEFT JOIN Participation '
+                . 'ON Tournament.tournament_id=Participation.tournament '
+                . 'WHERE tournament_id=:id '
+                . 'GROUP BY tournament_id,organizer, tname, start_date, end_date, '
+                . 'game_format, tournament_format, capacity, details, modified');
         $query->execute(array('id' => $id));
         $row = $query->fetch();
 
@@ -73,9 +79,9 @@ class Tournament extends BaseModel {
     public function save() {
         $query = DB::connection()->prepare('INSERT INTO Tournament (organizer, tname, '
                 . 'start_date, end_date, game_format, tournament_format, '
-                . 'participants, capacity, details, modified) '
+                . 'capacity, details, modified) '
                 . 'VALUES (:org, :name, :start, :end, :gameform, :tourform, '
-                . ':part, :cap, :details, :mod) RETURNING tournament_id');
+                . ':cap, :details, :mod) RETURNING tournament_id');
         $query->execute(array(
             'org' => intval($this->organizer),
             'name' => $this->tname,
@@ -83,7 +89,6 @@ class Tournament extends BaseModel {
             'end' => $this->end_date,
             'gameform' => $this->game_format,
             'tourform' => $this->tournament_format,
-            'part' => intval($this->participants),
             'cap' => intval($this->capacity),
             'details' => $this->details,
             'mod' => $this->modified
@@ -102,7 +107,6 @@ class Tournament extends BaseModel {
             'end_date' => $row['end_date'],
             'game_format' => $row['game_format'],
             'tournament_format' => $row['tournament_format'],
-            'participants' => $row['participants'],
             'capacity' => $row['capacity'],
             'details' => $row['details'],
             'modified' => $row['modified']
