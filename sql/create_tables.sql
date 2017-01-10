@@ -15,7 +15,6 @@ CREATE TABLE Tournament(
   end_date DATE NOT NULL,
   game_format varchar(20) NOT NULL,
   tournament_format varchar(20) NOT NULL,
-  participants INTEGER NOT NULL,
   capacity INTEGER NOT NULL,
   details varchar(5000),
   modified DATE NOT NULL

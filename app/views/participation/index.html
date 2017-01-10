@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+
 <h1>{{player.pname}}'s tournament participations</h1>
 
 <table class="table table-striped table-bordered">
@@ -7,7 +8,7 @@
         <tr>
             <th>Tournament name</th>
             <th>Start date</th>
-            <th>End date<th>
+            <th>End date</th>
             <th>Details</th>
         </tr>
     </thead>
@@ -19,7 +20,7 @@
             <td>{{participation.tname}}</td>
             <td>{{participation.start_date}}</td>
             <td>{{participation.end_date}}</td>
-            <td><a href="{{base_path}}/tournament/{{participation.tournament_id}}">Link</a></td>
+            <td><a href="{{base_path}}/tournament/{{participation.tournament_id}}">{{participation.tname}}</a></td>
         </tr>
         {% endfor %}
         {% endif %}
