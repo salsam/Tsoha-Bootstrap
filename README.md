@@ -27,5 +27,5 @@ Dynaamiset sivut:
 
 ## Työn aihe
 
-Työn aiheena on shakkitietokanta, jossa pidetään kirjaa turnauksista, niihin osallituneista pelaajista ja pelaajien välisistä pelistä.
+Työn aiheena on shakkitietokanta, jossa pidetään kirjaa turnauksista, niihin osallistuneista pelaajista ja pelaajien välisistä pelistä.
 Pelaajat voivat kirjautua tietokantaan lisätäkseen pelejä. Turnauksen järjestäjät taas voivat kirjautua ja lisätä turnauksia sekä osallistumisia(liitostaulu pelaajan ja turnauksen välillä). Pelaajista pidetään yllä nimi,salasana ja sähköposti. Peleistä vastustaja, päivämäärä,lopputulos ja muokkauspäivämäärä sekä valinnaisesti muistiinpanot. Turnauksista pidetään yllätietoa alku-/loppupäivämäärästä,  nimestä, formaatista (peli ja turnaus) ja turnauksen kapasiteetista.
