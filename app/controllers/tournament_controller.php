@@ -56,7 +56,12 @@ class TournamentController extends BaseController {
     public static function index() {
         self::check_logged_in();
         $tourneys = Tournament::all();
-        View::make('tournament/index.html', array('tourneys' => $tourneys));
+        $organizers = array();
+
+        foreach ($tourneys as $tourney) {
+            $organizers[$tourney->organizer] = Player::find($tourney->organizer);
+        }
+        View::make('tournament/index.html', array('tourneys' => $tourneys, 'organizers' => $organizers));
     }
 
     public static function store() {

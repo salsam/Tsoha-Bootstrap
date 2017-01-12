@@ -20,7 +20,9 @@
         <tr>
             <td>{{tourney.tname}}</td>
             <td>{{tourney.start_date}}</td>
-            <td>{{tourney.organizer}}</td>
+            <td><a href="{{base_path}}/player/{{tourney.organizer}}/profile">
+                    {{organizers[tourney.organizer].pname}}
+                </a></td>
             <td><a href="{{base_path}}/tournament/{{tourney.tournament_id}}">Link</a></td>
         </tr>
         {% endif %}
