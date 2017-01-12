@@ -1,8 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
+{% import "macros/forms.html" as forms %}
 
 <h1>{{player.pname}}'s profile</h1>
 <h3>Tournament organizer</h3>
+
+{% if player_logged_in.player_id==player.player_id %}
+{{forms.edit_button("#{base_path}/player/#{player.player_id}/edit")}}
+{% endif %}
 
 <ul>
     <li><strong>Name:</strong>{{player.pname}}</li>

@@ -5,21 +5,9 @@ Yleisiä linkkejä:
 * [Linkki sovellukseeni](http://samisalo.users.cs.helsinki.fi/ChessDatabase)
 * [Linkki dokumentaatiooni](https://github.com/salsam/Tsoha-Bootstrap/blob/master/doc/ChessDatabaseDocs.pdf)
 
-Staattiset sivut:
-* [Add new game](http://samisalo.users.cs.helsinki.fi/ChessDatabase/game_add)
-* [Game details](http://samisalo.users.cs.helsinki.fi/ChessDatabase/game_details)
-* [Game edit](http://samisalo.users.cs.helsinki.fi/ChessDatabase/game_edit)
-* [Game history](http://samisalo.users.cs.helsinki.fi/ChessDatabase/game_history)
-* [Organizer profile editing](http://samisalo.users.cs.helsinki.fi/ChessDatabase/organizer_edit)
-* [Player profile edit](http://samisalo.users.cs.helsinki.fi/ChessDatabase/player_edit)
-* [Tournament details](http://samisalo.users.cs.helsinki.fi/ChessDatabase/tournament_details)
-* [Tournament list](http://samisalo.users.cs.helsinki.fi/ChessDatabase/tournament_list)
-* [Login](http://samisalo.users.cs.helsinki.fi/ChessDatabase/login)
-* [Player registration](http://samisalo.users.cs.helsinki.fi/ChessDatabase/register)
-* [Organizer registration](http://samisalo.users.cs.helsinki.fi/ChessDatabase/organizer_register)
-
 Dynaamiset sivut:
 * [Login](https://samisalo.users.cs.helsinki.fi/ChessDatabase/player/login)
+* [Register](https://samisalo.users.cs.helsinki.fi/ChessDatabase/player/new)
 * [Game list](https://samisalo.users.cs.helsinki.fi/ChessDatabase/game)
 * [Tournament list](https://samisalo.users.cs.helsinki.fi/ChessDatabase/tournament)
 

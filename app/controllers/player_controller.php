@@ -11,7 +11,7 @@ class PlayerController extends BaseController {
         $player = Player::find($id);
 
         if ($player != null) {
-            if (BaseController::get_player_logged_in()->player_id == $id) {
+            if (self::get_player_logged_in()->player_id == $id) {
                 $player->delete();
                 Redirect::to('/', array('message' => 'Player has been deleted'));
             } else {
@@ -22,11 +22,26 @@ class PlayerController extends BaseController {
         }
     }
 
+    public static function edit($id) {
+        self::check_logged_in();
+        $player = Player::find($id);
+
+        if ($player) {
+            if (self::get_player_logged_in()->player_id == $id) {
+                View::make('player/edit.html', array('player' => $player));
+            } else {
+                Redirect::to('/', array('message' => 'You can only edit your own profile!'));
+            }
+        } else {
+            Redirect::to('/', array('message' => 'Player not found!'));
+        }
+    }
+
     public static function handle_login() {
         $params = $_POST;
 
         $player = Player::authenticate($params['username'], $params['password']);
-
+        
         if (!$player) {
             View::make('player/login.html', array('error' => 'Wrong username or password!'
                 , 'username' => $params['username']));

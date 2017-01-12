@@ -64,13 +64,19 @@ class Tournament extends BaseModel {
     }
 
     public static function findByName($name) {
-        $query = DB::connection()->prepare('SELECT * FROM Tournament '
-                . 'WHERE tname=:name LIMIT 1');
+        $query = DB::connection()->prepare('SELECT tournament_id, organizer, '
+                . 'tname,start_date, end_date,game_format, tournament_format,'
+                . 'count(player) AS participants, capacity, details, modified '
+                . 'FROM Tournament LEFT JOIN Participation '
+                . 'ON Tournament.tournament_id=Participation.tournament '
+                . 'WHERE tname=:name '
+                . 'GROUP BY tournament_id,organizer, tname, start_date, end_date, '
+                . 'game_format, tournament_format, capacity, details, modified');
         $query->execute(array('name' => $name));
         $row = $query->fetch();
 
         if ($row) {
-            $tourney = self::tournamentFromRow($row);
+            $tourney = self::tournamentFromRow($row, $row['participants']);
             return $tourney;
         }
         return null;
@@ -164,12 +170,12 @@ class Tournament extends BaseModel {
     public function validate_name() {
         $errors = array_merge($this->validate_string_length($this->tname, 20, "Name")
                 , $this->validate_string_min($this->tname, 1, "Name"));
+        $errors = array_merge($errors, $this->validate_not_whitespace($this->tname, "Name"));
 
         $match = self::findByName($this->tname);
         if ($match && $this->tournament_id != $match->tournament_id) {
             $errors[] = 'Name has been taken. Please try different name!';
         }
-
 
         return $errors;
     }

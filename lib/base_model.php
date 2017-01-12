@@ -107,4 +107,14 @@ class BaseModel {
         return $errors;
     }
 
+    public function validate_not_whitespace($param, $field) {
+        $errors = array();
+
+        if (ctype_space($param)) {
+            $errors[] = $field . " can't be whitespace! Requires at least 1 nonwhitespace character!";
+        }
+
+        return $errors;
+    }
+
 }
