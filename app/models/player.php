@@ -74,6 +74,30 @@ class Player extends BaseModel {
         return null;
     }
 
+    public static function checkEmailAvailability($email) {
+        $query = DB::connection()->prepare('SELECT * FROM Player WHERE email = :email LIMIT 1');
+        $query->execute(array('email' => $email));
+        $row = $query->fetch();
+
+        if ($row) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static function checkNameAvailability($name) {
+        $query = DB::connection()->prepare('SELECT * FROM Player WHERE pname = :name LIMIT 1');
+        $query->execute(array('name' => $name));
+        $row = $query->fetch();
+
+        if ($row) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function save() {
         $query = DB::connection()->prepare('INSERT INTO Player (pname, password, email) '
                 . 'VALUES (:name, :pass, :email) RETURNING player_id');
@@ -87,18 +111,15 @@ class Player extends BaseModel {
     }
 
     public function validate_name() {
-        return array_merge($this->validate_not_whitespace($this->pname, "Username"),
-                $this->validate_string_length($this->pname, 20, "Name"));
+        return array_merge($this->validate_not_whitespace($this->pname, "Username"), $this->validate_string_length($this->pname, 20, "Name"));
     }
 
     public function validate_password() {
-        return array_merge($this->validate_string_length($this->password, 20, "Password"),
-                $this->validate_string_min($this->password, 5, "Password"));
+        return array_merge($this->validate_string_length($this->password, 20, "Password"), $this->validate_string_min($this->password, 5, "Password"));
     }
 
     public function validate_email() {
-        return array_merge($this->validate_not_whitespace($this->email, "Email"),
-                $this->validate_string_length($this->email, 30, "Email"));
+        return array_merge($this->validate_not_whitespace($this->email, "Email"), $this->validate_string_length($this->email, 30, "Email"));
     }
 
 }

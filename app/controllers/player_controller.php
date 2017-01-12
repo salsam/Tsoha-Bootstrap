@@ -41,7 +41,7 @@ class PlayerController extends BaseController {
         $params = $_POST;
 
         $player = Player::authenticate($params['username'], $params['password']);
-        
+
         if (!$player) {
             View::make('player/login.html', array('error' => 'Wrong username or password!'
                 , 'username' => $params['username']));
@@ -73,24 +73,45 @@ class PlayerController extends BaseController {
 
     public static function storePlayer() {
         $params = $_POST;
-
-        $attributes = array(
-            'pname' => $params['pname'],
-            'password' => $params['pword'],
-            'email' => $params['email']
-        );
-
-        $player = new Player($attributes);
+        $player = self::playerFromRow($params);
         $errors = $player->errors();
 
         if (count($errors) == 0) {
-            $player->save();
-            Redirect::to('/', array('message', 'Player has been added!'));
+            try {
+                $player->save();
+                Redirect::to('/', array('message', 'Player has been added!'));
+            } catch (PDOException $e) {
+                self::handleUniqueness($player);
+            }
         } else {
             View::make('player/new.html', array(
                 'errors' => $errors,
-                'attributes' => $attributes));
+                'player' => $player));
         }
+    }
+
+    private static function handleUniqueness($player) {
+        $errors = array();
+
+        if (Player::checkEmailAvailability($player->email)) {
+            $errors[] = "There is already a user registered with given email.";
+        }
+
+        if (Player::checkNameAvailability($player->pname)) {
+            $errors[] = "Username has been taken. Please choose different name!";
+        }
+
+        View::make('player/new.html', array(
+            'errors' => $errors,
+            'player' => $player));
+    }
+
+    private static function playerFromRow($row) {
+        return new Player(array(
+            'pname' => $row['pname'],
+            'password' => $row['pword'],
+            'email' => $row['email']
+        ));
     }
 
 }
